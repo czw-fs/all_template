@@ -1,8 +1,8 @@
-package com.example.spring_source.demo.设计模式.适配器模式.类适配器模式.entity;
+package com.example.spring_source.demo.设计模式.结构型模式.适配器模式.service.impl;
 
-import com.example.spring_source.demo.设计模式.适配器模式.类适配器模式.service.IVoltage5VService;
+import com.example.spring_source.demo.设计模式.结构型模式.适配器模式.service.IVoltage5VService;
 
-public class Phone {
+public class PhoneServiceImpl {
 
     //充电
     public void charging(IVoltage5VService iVoltage5V) {
