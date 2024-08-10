@@ -1,0 +1,16 @@
+package com.example.springsecuritybase.modules.System.model.enums;
+
+import lombok.Getter;
+
+@Getter
+public enum UserStatus {
+    NORMAL("正常"),
+    DISABLE("禁用")
+    ;
+
+    private final String name;
+
+    UserStatus(String name) {
+        this.name = name;
+    }
+}
