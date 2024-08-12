@@ -1,13 +1,13 @@
 package com.example.spring_source.demo.设计模式.创建者模式.工厂方法模式;
 
 import com.example.spring_source.demo.设计模式.创建者模式.工厂方法模式.entity.Coffee;
-import com.example.spring_source.demo.设计模式.创建者模式.工厂方法模式.facade.CoffeeFacade;
 import com.example.spring_source.demo.设计模式.创建者模式.工厂方法模式.factory.impl.AmericanCoffeeFactory;
+import com.example.spring_source.demo.设计模式.创建者模式.工厂方法模式.stroe.CoffeeStore;
 
 public class Client {
     public static void main(String[] args) {
-        //决定使用哪个工厂
-        CoffeeFacade coffeeStore = new CoffeeFacade(new AmericanCoffeeFactory());
+        //CoffeeStore
+        CoffeeStore coffeeStore = new CoffeeStore(new AmericanCoffeeFactory());
 
         // 调用具体实现工厂创建的实体类对象的方法
         Coffee coffee = coffeeStore.orderCoffee();

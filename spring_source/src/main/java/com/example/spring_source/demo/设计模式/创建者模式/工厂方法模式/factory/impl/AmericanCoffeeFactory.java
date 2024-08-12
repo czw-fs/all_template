@@ -7,6 +7,7 @@ import com.example.spring_source.demo.设计模式.创建者模式.工厂方法�
 public class AmericanCoffeeFactory implements CoffeeFactory {
 
     public Coffee createCoffee() {
+        System.out.println("AmericanCoffeeFactory: creating a new AmericanCoffee object...");
         return new AmericanCoffee();
     }
 }
