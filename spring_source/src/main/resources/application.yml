@@ -1,9 +1,10 @@
-
+server:
+  servlet:
+    context-path: /api
 
 spring:
   application:
     name: spring的名称
-
 
   main:
     allow-circular-references: true
@@ -26,4 +27,5 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     cache-enabled: true
+
 

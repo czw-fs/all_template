@@ -9,7 +9,7 @@ public class SpringSourceApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(SpringSourceApplication.class, args);
-
+        System.out.println("启动成功");
     }
 
 }
