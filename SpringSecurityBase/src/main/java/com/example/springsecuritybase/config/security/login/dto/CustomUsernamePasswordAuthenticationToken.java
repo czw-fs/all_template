@@ -1,0 +1,49 @@
+package com.example.springsecuritybase.config.security.login.dto;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Collection;
+
+@Data
+@Accessors(chain = true)
+public class CustomUsernamePasswordAuthenticationToken extends AbstractAuthenticationToken implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -8946671571319812197L;
+
+    private String username;
+    private String password;
+    //当前登录用户信息
+    private UserLoginInfo currentUser;
+
+    public CustomUsernamePasswordAuthenticationToken(Collection<? extends GrantedAuthority> authorities) {
+        super(authorities);//权限
+    }
+
+    public CustomUsernamePasswordAuthenticationToken() {
+        super(null); // 调用父类的构造函数
+    }
+
+    /**
+     * 认证成功获取用户名密码
+     * @return
+     */
+    @Override
+    public Object getCredentials() {
+        return isAuthenticated() ? null : password;
+    }
+
+    /**
+     * 认证成功返回用户信息
+     * @return
+     */
+    @Override
+    public Object getPrincipal() {
+        return isAuthenticated() ? currentUser : username;
+    }
+}
