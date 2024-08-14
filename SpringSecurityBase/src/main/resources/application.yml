@@ -10,3 +10,12 @@ mybatis-plus:
   mapper-locations: classpath:com/example/springsecuritybase/modules/**/*.xml
 
 
+jwt:
+  secret: helloword
+  expiration: 1 # 1天过期
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

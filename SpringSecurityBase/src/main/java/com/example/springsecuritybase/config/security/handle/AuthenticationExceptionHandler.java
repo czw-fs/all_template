@@ -22,7 +22,6 @@ public class AuthenticationExceptionHandler implements AuthenticationEntryPoint 
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
     response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
     PrintWriter writer = response.getWriter();

@@ -8,7 +8,7 @@ import jakarta.validation.ConstraintValidatorContext;
  */
 public class HaveNoBlankValidator implements ConstraintValidator<HaveNoBlank, String> {
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+    public boolean isValid(@HaveNoBlank @HaveNoBlank String value, ConstraintValidatorContext context) {
         // null 不做检验
         if (value == null) {
             return true;

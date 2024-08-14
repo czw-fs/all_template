@@ -1,7 +1,12 @@
 package com.example.springsecuritybase.modules.System.model.entities;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
+
+@Data
+@Accessors(chain = true)
 @TableName("sys_user")
 public class User {
     /**

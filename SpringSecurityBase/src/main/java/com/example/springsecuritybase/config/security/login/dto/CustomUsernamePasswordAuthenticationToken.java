@@ -1,6 +1,8 @@
 package com.example.springsecuritybase.config.security.login.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +11,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Accessors(chain = true)
 public class CustomUsernamePasswordAuthenticationToken extends AbstractAuthenticationToken implements Serializable {
 
@@ -26,7 +30,7 @@ public class CustomUsernamePasswordAuthenticationToken extends AbstractAuthentic
     }
 
     public CustomUsernamePasswordAuthenticationToken() {
-        super(null); // 调用父类的构造函数
+        super(null); // 禁用权限
     }
 
     /**
