@@ -32,32 +32,34 @@ public class JwtFilter extends OncePerRequestFilter {
         //获取 header里的token
         final String token = request.getHeader("token");
 
-        if ("OPTIONS".equals(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-            chain.doFilter(request, response);
-        } else {
-            UserLoginInfo userLoginInfo = jwtUtils.getUserLoginInfoFromJwt(token);
-            if(userLoginInfo == null){
-                response.getWriter().write(new Gson().toJson(Result.error(HttpStatus.UNAUTHORIZED.value(),"token无效")));
-                doFilter(request, response, chain);
-                return;
-            }
+//        if ("OPTIONS".equals(request.getMethod())) {
+//            response.setStatus(HttpServletResponse.SC_OK);
+//            chain.doFilter(request, response);
+//            return;
+//        }
 
-            if(jwtUtils.isTokenExpired(token)){
-                response.getWriter().write(new Gson().toJson(Result.error(HttpStatus.UNAUTHORIZED.value(),"token过期")));
-                doFilter(request, response, chain);
-                return;
-            }
-
-            CustomUsernamePasswordAuthenticationToken authenticationToken = new CustomUsernamePasswordAuthenticationToken();
-            authenticationToken.setCurrentUser(userLoginInfo);
-            authenticationToken.setAuthenticated(true);//token有效，认证成功
-
-            //验证成功，设置security上下文，无需验证
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-            chain.doFilter(request, response);
-            System.out.println("圣诞节分厘卡圣诞节发");
+        UserLoginInfo userLoginInfo = jwtUtils.getUserLoginInfoFromJwt(token);
+        if (userLoginInfo == null) {
+            response.getWriter().write(new Gson().toJson(Result.error(HttpStatus.UNAUTHORIZED.value(), "token无效")));
+            doFilter(request, response, chain);
+            return;
         }
+
+        if (jwtUtils.isTokenExpired(token)) {
+            response.getWriter().write(new Gson().toJson(Result.error(HttpStatus.UNAUTHORIZED.value(), "token过期")));
+            doFilter(request, response, chain);
+            return;
+        }
+
+        CustomUsernamePasswordAuthenticationToken authenticationToken = new CustomUsernamePasswordAuthenticationToken();
+        authenticationToken.setCurrentUser(userLoginInfo);
+        authenticationToken.setAuthenticated(true);//token有效，认证成功
+
+        //验证成功，设置security上下文，无需验证
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        chain.doFilter(request, response);
+        System.out.println("圣诞节分厘卡圣诞节发");
+
     }
 }

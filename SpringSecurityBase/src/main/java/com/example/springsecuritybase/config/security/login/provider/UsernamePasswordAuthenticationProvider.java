@@ -1,4 +1,4 @@
-package com.example.springsecuritybase.config.security.login.authenticationProvider;
+package com.example.springsecuritybase.config.security.login.provider;
 
 import com.example.springsecuritybase.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
@@ -54,6 +54,9 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
                 .setUsername(user.getUsername())
         ;
         return userLoginInfo;
+        /**
+         * 这里security会将UserLoginInfo对象封装到Authentication对象中，并设置到当前线程的security的上下文中。接下载就可以使用SecurityContext了
+         */
     }
 
     @Override

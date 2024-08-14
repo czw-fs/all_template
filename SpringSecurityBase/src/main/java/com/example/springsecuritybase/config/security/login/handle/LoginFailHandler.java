@@ -14,6 +14,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * 登录失败处理器
+ */
+
 @Component
 @Slf4j
 public class LoginFailHandler implements AuthenticationFailureHandler {

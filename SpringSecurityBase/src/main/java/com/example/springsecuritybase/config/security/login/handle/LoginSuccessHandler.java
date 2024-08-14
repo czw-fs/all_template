@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.UUID;
 
+/**
+ * 登录成功处理器
+ */
+
 @Component
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {

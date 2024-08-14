@@ -1,12 +1,12 @@
 package com.example.springsecuritybase.config.security;
 
-import com.example.springsecuritybase.config.security.handle.AuthenticationExceptionHandler;
-import com.example.springsecuritybase.config.security.handle.CustomAccessDeniedHandler;
-import com.example.springsecuritybase.config.security.login.authenticationProvider.UsernamePasswordAuthenticationProvider;
 import com.example.springsecuritybase.config.security.login.filter.JwtFilter;
 import com.example.springsecuritybase.config.security.login.filter.UsernameAuthenticationFilter;
+import com.example.springsecuritybase.config.security.login.handle.AuthenticationExceptionHandler;
+import com.example.springsecuritybase.config.security.login.handle.CustomAccessDeniedHandler;
 import com.example.springsecuritybase.config.security.login.handle.LoginFailHandler;
 import com.example.springsecuritybase.config.security.login.handle.LoginSuccessHandler;
+import com.example.springsecuritybase.config.security.login.provider.UsernamePasswordAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +22,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.time.Duration;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +47,9 @@ public class SecurityConfig {
         disableSomeHttpSetting(http);
         // 使用securityMatcher限定当前配置作用的路径
         http.securityMatcher("/user/login/*")
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+                .cors((cors)-> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
+                ;
 
         // 用户名、密码登录
         UsernameAuthenticationFilter usernameLoginFilter = new UsernameAuthenticationFilter(
@@ -88,6 +96,21 @@ public class SecurityConfig {
     }
 
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setMaxAge(Duration.ofHours(1));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+
+        return source;
+    }
 
 
     /**

@@ -1,4 +1,4 @@
-package com.example.springsecuritybase.config.security.handle;
+package com.example.springsecuritybase.config.security.login.handle;
 
 import com.example.springsecuritybase.modules.common.model.Result;
 import com.google.gson.Gson;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * 认证失败时，会执行这个方法。将失败原因告知客户端
+ * 认证失败处理器
  */
 public class AuthenticationExceptionHandler implements AuthenticationEntryPoint {
 

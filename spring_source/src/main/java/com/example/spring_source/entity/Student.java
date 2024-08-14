@@ -1,15 +1,22 @@
 package com.example.spring_source.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Student {
 
+    public String getName() {
+        return name;
+    }
+
+    public Student() {
+    }
+
+    public Student(String name) {
+        this.name = name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     private String name;
 }
