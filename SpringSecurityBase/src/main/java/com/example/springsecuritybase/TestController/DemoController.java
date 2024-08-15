@@ -1,6 +1,6 @@
 package com.example.springsecuritybase.TestController;
 
-import com.example.springsecuritybase.modules.System.service.UserService;
+import com.example.springsecuritybase.modules.System.user.service.UserService;
 import com.example.springsecuritybase.modules.common.model.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

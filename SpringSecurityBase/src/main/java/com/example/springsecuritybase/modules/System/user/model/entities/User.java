@@ -1,13 +1,14 @@
-package com.example.springsecuritybase.modules.System.model.entities;
+package com.example.springsecuritybase.modules.System.user.model.entities;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.example.springsecuritybase.modules.System.model.enums.Gender;
-import com.example.springsecuritybase.modules.System.model.enums.UserStatus;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.springsecuritybase.modules.common.model.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("sys_user")
@@ -15,7 +16,7 @@ public class User extends BaseEntity {
     /**
      * 主键ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
     /**
      * 用户名
@@ -28,7 +29,7 @@ public class User extends BaseEntity {
     /**
      * 性别
      */
-    private Gender gender;
+    private String gender;
     /**
      * 头像
      */
@@ -44,6 +45,6 @@ public class User extends BaseEntity {
     /**
      * 状态
      */
-    private UserStatus status;
+    private String status;
 
 }

@@ -6,7 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan({
-    "com.example.springsecuritybase.modules.System.mapper.user"
+    "com.example.springsecuritybase.modules.System.user.mapper",
+    "com.example.springsecuritybase.modules.System.dict.mapper",
+    "com.example.springsecuritybase.modules.System.menu.mapper"
 })
 @SpringBootApplication
 @Slf4j

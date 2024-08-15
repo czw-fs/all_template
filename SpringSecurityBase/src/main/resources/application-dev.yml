@@ -28,6 +28,7 @@ mybatis-plus:
       logic-delete-field: isDeleted
       logic-not-delete-value: false
       logic-delete-value: true
+      id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/example/springsecuritybase/modules/**/*.xml

@@ -1,9 +1,7 @@
-package com.example.springsecuritybase.modules.System.model.dto;
+package com.example.springsecuritybase.modules.System.user.model.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.example.springsecuritybase.modules.System.model.enums.Gender;
-import com.example.springsecuritybase.modules.System.model.enums.UserStatus;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -24,7 +22,7 @@ public class UserDto {
     /**
      * 性别
      */
-    private Gender gender;
+    private String gender;
     /**
      * 头像
      */
@@ -40,5 +38,5 @@ public class UserDto {
     /**
      * 状态
      */
-    private UserStatus status;
+    private String status;
 }

@@ -1,9 +1,10 @@
 package com.example.springsecuritybase.config.security.login.provider;
 
+
 import com.example.springsecuritybase.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
-import com.example.springsecuritybase.modules.System.model.entities.User;
-import com.example.springsecuritybase.modules.System.service.impl.UserServiceImpl;
+import com.example.springsecuritybase.modules.System.user.model.entities.User;
+import com.example.springsecuritybase.modules.System.user.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
