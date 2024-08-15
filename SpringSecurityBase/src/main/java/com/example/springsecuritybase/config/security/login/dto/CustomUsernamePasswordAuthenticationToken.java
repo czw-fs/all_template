@@ -2,7 +2,6 @@ package com.example.springsecuritybase.config.security.login.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,7 +12,6 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@ToString
 @Accessors(chain = true)
 public class CustomUsernamePasswordAuthenticationToken extends AbstractAuthenticationToken implements Serializable {
 

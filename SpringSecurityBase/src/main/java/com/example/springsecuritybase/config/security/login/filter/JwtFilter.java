@@ -1,5 +1,6 @@
 package com.example.springsecuritybase.config.security.login.filter;
 
+
 import com.example.springsecuritybase.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
 import com.example.springsecuritybase.modules.common.model.Result;
@@ -26,8 +27,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        System.out.println("+++++++++++++++++++++++++++++++++++");
-        System.out.println("+++++++++++++++++++++++++++++++++++");
         response.setCharacterEncoding("UTF-8");
         //获取 header里的token
         final String token = request.getHeader("token");

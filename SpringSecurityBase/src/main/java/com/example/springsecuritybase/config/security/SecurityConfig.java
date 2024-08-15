@@ -46,7 +46,7 @@ public class SecurityConfig {
     public SecurityFilterChain loginFilterChain(HttpSecurity http, LoginSuccessHandler loginSuccessHandler, LoginFailHandler loginFailHandler, UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider) throws Exception {
         disableSomeHttpSetting(http);
         // 使用securityMatcher限定当前配置作用的路径
-        http.securityMatcher("/user/login/*")
+        http.securityMatcher("/login")
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .cors((cors)-> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
                 ;
@@ -60,6 +60,17 @@ public class SecurityConfig {
         );
         http.addFilterBefore(usernameLoginFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(jwtFilter, SecurityContextHolderFilter.class);
+        return http.build();
+    }
+
+    /** 不鉴权的api */
+    @Bean
+    public SecurityFilterChain publicApiFilterChain(HttpSecurity http) throws Exception {
+        disableSomeHttpSetting(http);
+        http
+                // 使用securityMatcher限定当前配置作用的路径
+                .securityMatcher("/registry")
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
 
