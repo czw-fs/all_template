@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalWebExceptionHandle {
 
     @ExceptionHandler(value = Exception.class)
-    public Result exceptionHandler(HttpServletResponse response, Exception e) {
+    public Result<String> exceptionHandler(HttpServletResponse response, Exception e) {
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         log.error("服务器异常", e);
-        return Result.error("服务器异常");
+        return Result.error(e.toString());
     }
+
 }

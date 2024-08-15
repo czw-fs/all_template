@@ -9,7 +9,6 @@ import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -65,10 +64,6 @@ public class JwtUtils {
      */
     public UserLoginInfo getUserLoginInfoFromJwt(String token){
 
-        if(!StringUtils.hasLength(token)){
-            return null;
-        }
-
         Map<String, Claim> map = getMapFromToken(token);
         if(map == null){
             return null;
@@ -95,11 +90,12 @@ public class JwtUtils {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret)).build();
             jwt = verifier.verify(token);
+            return jwt.getClaims();
         } catch (Exception e) {
             log.error(e.getMessage());
             log.error("token解码异常");
+            return null;
         }
-        return jwt.getClaims();
     }
 
 }

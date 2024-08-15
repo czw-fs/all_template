@@ -1,6 +1,7 @@
 package com.example.springsecuritybase.config.security.login.handle;
 
 import com.example.springsecuritybase.modules.common.model.Result;
+import com.example.springsecuritybase.utils.JwtUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,16 +24,22 @@ import java.io.PrintWriter;
 public class LoginFailHandler implements AuthenticationFailureHandler {
 
 
+    private final JwtUtils jwtUtils;
+
+    public LoginFailHandler(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
+
         log.error(exception.getMessage());
 
-        String errorMessage = exception.getMessage();
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
         PrintWriter writer = response.getWriter();
-        writer.print(new Gson().toJson(Result.error(errorMessage)));
+        writer.print(new Gson().toJson(Result.error(exception.getMessage())));
         writer.flush();
         writer.close();
     }

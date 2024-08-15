@@ -7,7 +7,7 @@ import com.example.springsecuritybase.config.security.login.handle.CustomAccessD
 import com.example.springsecuritybase.config.security.login.handle.LoginFailHandler;
 import com.example.springsecuritybase.config.security.login.handle.LoginSuccessHandler;
 import com.example.springsecuritybase.config.security.login.provider.UsernamePasswordAuthenticationProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,35 +30,37 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final AuthenticationExceptionHandler authenticationExceptionHandler = new AuthenticationExceptionHandler();
-    private final CustomAccessDeniedHandler customAccessDeniedHandler = new CustomAccessDeniedHandler();
-
-    @Autowired
-    private UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider;
-
-    @Autowired
-    private JwtFilter jwtFilter;
+    private final AuthenticationExceptionHandler authenticationExceptionHandler;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginFailHandler loginFailHandler;
+    private final UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider;
+    private final JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain loginFilterChain(HttpSecurity http, LoginSuccessHandler loginSuccessHandler, LoginFailHandler loginFailHandler, UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider) throws Exception {
+    public SecurityFilterChain loginFilterChain(HttpSecurity http) throws Exception {
         disableSomeHttpSetting(http);
-        // 使用securityMatcher限定当前配置作用的路径
-        http.securityMatcher("/login")
+        // 所有路径都需要认证
+        http.securityMatcher("/**")
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .cors((cors)-> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
                 ;
 
         // 用户名、密码登录
+        // /login走认证过滤器
         UsernameAuthenticationFilter usernameLoginFilter = new UsernameAuthenticationFilter(
-                new AntPathRequestMatcher("/user/login/username", HttpMethod.POST.name()),
+                new AntPathRequestMatcher("/login", HttpMethod.POST.name()),
                 new ProviderManager(usernamePasswordAuthenticationProvider),
                 loginSuccessHandler,
                 loginFailHandler
         );
+        //注意顺序，先添加的过滤器排在前面，所以先添加jwtFilter
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(usernameLoginFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(jwtFilter, SecurityContextHolderFilter.class);
+
         return http.build();
     }
 
@@ -107,6 +108,10 @@ public class SecurityConfig {
     }
 
 
+    /**
+     * 跨域配置
+     * @return
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 

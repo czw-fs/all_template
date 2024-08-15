@@ -1,3 +1,7 @@
+server:
+  port: 6666
+  servlet:
+    context-path: /api
 spring:
   application:
     name: SpringSecurityBase
@@ -8,11 +12,20 @@ spring:
     password: 123456
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  mvc: #前端传参，字符串转日期类型
+    format:
+      date: yyyy-MM-dd
+      time: HH:mm:ss
+      date-time: yyyy-MM-dd HH:mm:ss
+
+  main:
+    banner-mode: off
 
 mybatis-plus:
-#  global-config:
-
+  global-config:
+    banner: false
   mapper-locations: classpath:com/example/springsecuritybase/modules/**/*.xml
+
 
 jwt:
   secret: HelloWorld
@@ -23,4 +36,3 @@ logging:
     org:
       springframework:
         security: debug
-
