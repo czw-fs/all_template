@@ -59,7 +59,5 @@ public class JwtFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         chain.doFilter(request, response);
-        System.out.println("圣诞节分厘卡圣诞节发");
-
     }
 }
