@@ -24,7 +24,14 @@ spring:
 mybatis-plus:
   global-config:
     banner: false
+    db-config:
+      logic-delete-field: isDeleted
+      logic-not-delete-value: false
+      logic-delete-value: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/example/springsecuritybase/modules/**/*.xml
+
 
 
 jwt:
