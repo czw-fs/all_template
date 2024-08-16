@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,16 +49,7 @@ public class JwtUtils {
      */
     public boolean isTokenExpired(String token) {
         Date activeTime = JWT.decode(token).getExpiresAt();
-        if(activeTime.before(new Date())){
-            log.error("token已在{}过期，请重新登录", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(activeTime));
-            return true;
-        }else {
-            log.error("token未过期，过期时间为{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(activeTime));
-            return false;
-        }
-
-
-
+        return activeTime.before(new Date());
     }
 
     /**

@@ -35,7 +35,7 @@ mybatis-plus:
 
 jwt:
   secret: HelloWorld
-  expiration: 1 # 1天过期
+  expiration: 7 # 7天过期
 
 logging:
   level:

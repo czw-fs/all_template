@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationExceptionHandler implements AuthenticationEntryPoint {
 
   private final JwtUtils jwtUtils;
@@ -37,6 +39,7 @@ public class AuthenticationExceptionHandler implements AuthenticationEntryPoint 
     final String token = request.getHeader("token");
 
     if(!StringUtils.hasLength(token) || jwtUtils.isTokenExpired(token)){
+        log.error("token已在 {}过期，请重新登录", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(jwtUtils.getTokenExpiredTime(token)));
       String msg = "token已在 "+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(jwtUtils.getTokenExpiredTime(token)) + "过期，请重新登录";
       writer.write(new Gson().toJson(Result.error(HttpStatus.UNAUTHORIZED.value(),msg)));
     }else {
