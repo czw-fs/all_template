@@ -10,6 +10,11 @@ public interface DictConvert {
 
     Dict dictDtoToDict(DictDto dictDto);
 
+    /**
+     * 处理继承
+     * @param dict
+     * @return
+     */
     @InheritInverseConfiguration
     DictDto dictToDictDto(Dict dict);
 }

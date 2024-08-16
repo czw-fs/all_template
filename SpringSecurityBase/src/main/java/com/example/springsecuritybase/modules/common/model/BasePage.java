@@ -1,5 +1,6 @@
 package com.example.springsecuritybase.modules.common.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -7,11 +8,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BasePage {
 
+    @NotNull
     private int curPage;
+
+    @NotNull
     private int size;
 
-    public void toDefaultCurrentAndSize() {
-        this.curPage = 1;
-        this.size = 10;
-    }
 }

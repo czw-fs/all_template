@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
         final String token = request.getHeader("token");
 
         //token为空或token过期，直接放行，进入认证流程
-        if(token == null || jwtUtils.isTokenExpired(token)){
+        if(!StringUtils.hasLength(token) || jwtUtils.isTokenExpired(token)){
             chain.doFilter(request, response);
             return;
         }

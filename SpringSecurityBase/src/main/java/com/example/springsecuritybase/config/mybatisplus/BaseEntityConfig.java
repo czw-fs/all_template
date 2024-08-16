@@ -1,7 +1,7 @@
 package com.example.springsecuritybase.config.mybatisplus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.example.springsecuritybase.config.security.SecurityUtils;
+import com.example.springsecuritybase.utils.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 

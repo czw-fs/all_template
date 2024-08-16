@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class JwtUtils {
     @Value("${jwt.expiration}")
     private Integer expiration;
 
-    public String createJwt(UserLoginInfo userLoginInfo){
+    public String createJwt(UserLoginInfo userLoginInfo) {
         Date expireDate = new Date(System.currentTimeMillis() + expiration * 1000 * 60 * 60 * 24);
         Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
@@ -43,29 +44,41 @@ public class JwtUtils {
 
     /**
      * 检查 JWT 是否过期
+     *
      * @param token
      * @return 如果 token 过期返回 true，否则返回 false
      */
     public boolean isTokenExpired(String token) {
-        try {
-            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
-            Date expiration = decodedJWT.getExpiresAt();
-            return expiration.before(new Date()); // 如果当前时间晚于过期时间，则返回 true
-        } catch (Exception e) {
-            log.error("检查 token 过期异常: " + e.getMessage());
-            return true; // 如果验证过程中发生异常，假设 token 已过期
+        Date activeTime = JWT.decode(token).getExpiresAt();
+        if(activeTime.before(new Date())){
+            log.error("token已在{}过期，请重新登录", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(activeTime));
+            return true;
+        }else {
+            log.error("token未过期，过期时间为{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(activeTime));
+            return false;
         }
+
+
+
+    }
+
+    /**
+     *  获取 token 过期时间
+     */
+    public Date getTokenExpiredTime(String token) {
+        return JWT.decode(token).getExpiresAt();
     }
 
     /**
      * 获取token中的用户信息
+     *
      * @param token
      * @return
      */
-    public UserLoginInfo getUserLoginInfoFromJwt(String token){
+    public UserLoginInfo getUserLoginInfoFromJwt(String token) {
 
         Map<String, Claim> map = getMapFromToken(token);
-        if(map == null){
+        if (map == null) {
             return null;
         }
 
@@ -82,6 +95,7 @@ public class JwtUtils {
 
     /**
      * 获取jwt中的所有参数
+     *
      * @param token
      * @return
      */

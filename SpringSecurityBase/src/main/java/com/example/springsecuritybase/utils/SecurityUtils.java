@@ -1,4 +1,4 @@
-package com.example.springsecuritybase.config.security;
+package com.example.springsecuritybase.utils;
 
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
 import org.springframework.security.core.context.SecurityContextHolder;
