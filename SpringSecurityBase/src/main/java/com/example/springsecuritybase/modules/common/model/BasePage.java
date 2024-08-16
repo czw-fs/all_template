@@ -9,9 +9,9 @@ import lombok.experimental.Accessors;
 public class BasePage {
 
     @NotNull
-    private int curPage;
+    private int pageNum;
 
     @NotNull
-    private int size;
+    private int pageSize;
 
 }

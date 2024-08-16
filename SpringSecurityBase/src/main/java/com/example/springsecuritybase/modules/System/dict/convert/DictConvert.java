@@ -5,6 +5,8 @@ import com.example.springsecuritybase.modules.System.dict.model.entities.Dict;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface DictConvert {
 
@@ -17,4 +19,6 @@ public interface DictConvert {
      */
     @InheritInverseConfiguration
     DictDto dictToDictDto(Dict dict);
+
+    List<DictDto> dictListToDictDtoList(List<Dict> dictList);
 }

@@ -11,6 +11,8 @@ import com.example.springsecuritybase.modules.System.dict.service.DictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
@@ -39,10 +41,10 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
     @Override
     public Page<DictDto> getPage(DictSearchDto dto) {
-
-        Page<DictDto> page = new Page<>(dto.getCurPage(),dto.getSize());
-        dictMapper.getPage(dto,page);
-
-        return null;
+        Page<DictDto> page = new Page<>(dto.getPageNum(),dto.getPageSize());
+        List<Dict> dictList = dictMapper.getPage(dto, page);
+        List<DictDto> dictDtoList = dictConvert.dictListToDictDtoList(dictList);
+        page.setRecords(dictDtoList);
+        return page;
     }
 }
