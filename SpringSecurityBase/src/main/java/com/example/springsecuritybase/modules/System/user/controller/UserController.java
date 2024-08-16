@@ -52,7 +52,7 @@ public class UserController {
      * @param userDto
      * @return
      */
-    @@GetMapping("/{id}")
+    @GetMapping("/{id}")
     public Result<Void> getById(@RequestBody UserDto userDto) {
 
         return Result.success();

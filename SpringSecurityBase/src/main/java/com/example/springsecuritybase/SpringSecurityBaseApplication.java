@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan({
     "com.example.springsecuritybase.modules.System.user.mapper",
     "com.example.springsecuritybase.modules.System.dict.mapper",
-    "com.example.springsecuritybase.modules.System.menu.mapper"
+    "com.example.springsecuritybase.modules.System.menu.mapper",
+    "com.example.springsecuritybase.modules.test.mapper"
 })
 @SpringBootApplication
 @Slf4j

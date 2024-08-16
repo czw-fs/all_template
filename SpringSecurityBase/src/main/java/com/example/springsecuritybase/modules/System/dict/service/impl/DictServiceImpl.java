@@ -1,9 +1,11 @@
 package com.example.springsecuritybase.modules.System.dict.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springsecuritybase.modules.System.dict.convert.DictConvert;
 import com.example.springsecuritybase.modules.System.dict.mapper.DictMapper;
 import com.example.springsecuritybase.modules.System.dict.model.dto.DictDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.DictSearchDto;
 import com.example.springsecuritybase.modules.System.dict.model.entities.Dict;
 import com.example.springsecuritybase.modules.System.dict.service.DictService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +35,14 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         Dict dict = dictMapper.selectById(id);
         DictDto dictDto = dictConvert.dictToDictDto(dict);
         return dictDto;
+    }
+
+    @Override
+    public Page<DictDto> getPage(DictSearchDto dto) {
+
+        Page<DictDto> page = new Page<>(dto.getCurPage(),dto.getSize());
+        dictMapper.getPage(dto,page);
+
+        return null;
     }
 }
