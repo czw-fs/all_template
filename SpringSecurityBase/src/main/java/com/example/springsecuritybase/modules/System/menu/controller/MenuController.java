@@ -5,6 +5,7 @@ import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDt
 import com.example.springsecuritybase.modules.System.menu.service.MenuService;
 import com.example.springsecuritybase.modules.common.model.Result;
 import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
+import com.example.springsecuritybase.modules.common.validation.group.UpdateGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class MenuController {
      * @return
      */
     @PutMapping("/update")
-    public Result<Void> update(@RequestBody @Validated MenuDto menuDto) {
+    public Result<Void> update(@RequestBody @Validated(UpdateGroup.class) MenuDto menuDto) {
         menuService.update(menuDto);
         return Result.success();
     }
@@ -58,7 +59,7 @@ public class MenuController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
+    public Result<Void> delete(@PathVariable("id") Long id) {
         menuService.removeById(id);
         return Result.success();
     }
