@@ -8,6 +8,7 @@ import com.example.springsecuritybase.modules.System.dict.model.entities.Dict;
 import com.example.springsecuritybase.modules.System.dict.service.DictService;
 import com.example.springsecuritybase.modules.common.model.Result;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -51,17 +52,6 @@ public class DictController {
     }
 
     /**
-     * 分页查询
-     * @param searchDto
-     * @return
-     */
-    @GetMapping("/page")
-    public Result<Page<DictDto>> page(DictSearchDto searchDto) {
-        Page<DictDto> page = dictService.getPage(searchDto);
-        return Result.success(page);
-    }
-
-    /**
      * 根据id删除
      * @param id
      * @return
@@ -70,5 +60,16 @@ public class DictController {
     public Result<Dict> deleteById(@PathVariable("id") Long id) {
         dictService.removeById(id);
         return Result.success();
+    }
+
+    /**
+     * 分页查询
+     * @param searchDto
+     * @return
+     */
+    @GetMapping("/page")
+    public Result<Page<DictDto>> page(@Validated DictSearchDto searchDto) {
+        Page<DictDto> page = dictService.getPage(searchDto);
+        return Result.success(page);
     }
 }

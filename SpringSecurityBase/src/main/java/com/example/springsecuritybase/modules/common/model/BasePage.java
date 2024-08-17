@@ -8,10 +8,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BasePage {
 
-    @NotNull
-    private int pageNum;
+    @NotNull(message = "pageNum不能为空")
+    private Integer pageNum;
 
-    @NotNull
-    private int pageSize;
+    @NotNull(message = "pageSize不能为空")
+    private Integer pageSize;
 
 }
