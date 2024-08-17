@@ -27,13 +27,13 @@ import java.util.TimeZone;
 @Configuration
 public class DateFormatConfig {
 
-    @Value("${spring.mvc.format.date-time}")
+    @Value("${spring.mvc.format.date-time:yyyy-MM-dd HH:mm:ss}")
     private String dateTimePattern;
 
-    @Value("${spring.mvc.format.date}")
+    @Value("${spring.mvc.format.date:yyyy-MM-dd}")
     private String datePattern;
 
-    @Value("${spring.mvc.format.time}")
+    @Value("${spring.mvc.format.time:HH:mm:ss}")
     private String timePattern;
 
     @Bean

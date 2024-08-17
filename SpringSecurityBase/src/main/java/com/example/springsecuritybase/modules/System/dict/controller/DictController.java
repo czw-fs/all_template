@@ -7,6 +7,7 @@ import com.example.springsecuritybase.modules.System.dict.model.dto.DictSearchDt
 import com.example.springsecuritybase.modules.System.dict.model.entities.Dict;
 import com.example.springsecuritybase.modules.System.dict.service.DictService;
 import com.example.springsecuritybase.modules.common.model.Result;
+import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class DictController {
      * @return
      */
     @PostMapping("/create")
-    public Result<Void> create(@RequestBody DictDto dictDto) {
+    public Result<Void> create(@RequestBody @Validated({CreateGroup.class}) DictDto dictDto) {
         dictService.create(dictDto);
         return Result.success();
     }

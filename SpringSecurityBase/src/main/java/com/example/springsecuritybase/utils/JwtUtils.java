@@ -18,10 +18,10 @@ import java.util.Map;
 @Component
 public class JwtUtils {
 
-    @Value("${jwt.secret}")
+    @Value("${jwt.secret:helloworld}")
     private String secret;
 
-    @Value("${jwt.expiration}")
+    @Value("${jwt.expiration:7}")
     private Integer expiration;
 
     public String createJwt(UserLoginInfo userLoginInfo) {

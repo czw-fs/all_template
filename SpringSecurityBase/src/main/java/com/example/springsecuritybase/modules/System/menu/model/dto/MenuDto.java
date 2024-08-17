@@ -1,11 +1,26 @@
 package com.example.springsecuritybase.modules.System.menu.model.dto;
 
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
+import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
 public class MenuDto {
+
+    /**
+     *  菜单id
+     */
+    @Null(message = "菜单id不能为空",groups = CreateGroup.class)
+    private Long id;
+
+    /**
+     * 父id
+     */
+    @NotNull(message = "父id不能为空")
     private Long parentId;
     /**
      * 菜单名称
@@ -34,7 +49,7 @@ public class MenuDto {
     /**
      * 是否展示
      */
-    private Boolean show;
+    private MenuDisplay display;
     /**
      * 排序
      */

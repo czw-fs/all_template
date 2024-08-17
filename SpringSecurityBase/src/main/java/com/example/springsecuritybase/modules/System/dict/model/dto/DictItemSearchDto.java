@@ -5,15 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class DictItem {
-    /**
-     * id
-     */
-    private Long id;
-    /**
-     * 字典id
-     */
-    private Long dictId;
+public class DictItemSearchDto {
     /**
      * 字典展示名称
      */
@@ -26,12 +18,4 @@ public class DictItem {
      * 状态
      */
     private String status;
-    /**
-     * 排序：降序排
-     */
-    private String sort;
-    /**
-     * 说明
-     */
-    private String remark;
 }

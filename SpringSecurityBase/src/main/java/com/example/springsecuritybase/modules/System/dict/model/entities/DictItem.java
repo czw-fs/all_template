@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("dict")
+@TableName("sys_dict_item")
 public class DictItem extends BaseEntity {
     /**
      * id

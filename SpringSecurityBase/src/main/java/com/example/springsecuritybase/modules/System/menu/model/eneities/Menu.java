@@ -1,6 +1,8 @@
 package com.example.springsecuritybase.modules.System.menu.model.eneities;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
 import com.example.springsecuritybase.modules.common.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +11,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
+@TableName("sys_menu")
 public class Menu extends BaseEntity {
 
     @TableId
@@ -44,7 +47,7 @@ public class Menu extends BaseEntity {
     /**
      * 是否展示
      */
-    private Boolean show;
+    private MenuDisplay display;
     /**
      * 排序
      */
