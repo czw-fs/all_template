@@ -37,7 +37,7 @@ public class DictItem extends BaseEntity {
     /**
      * 排序：降序排
      */
-    private String sort;
+    private Integer sort;
     /**
      * 说明
      */

@@ -13,7 +13,7 @@
                 and type = #{dto.type}
             </if>
             <if test="dto.display != null">
-                and show = #{dto.display}
+                and display = #{dto.display}
             </if>
         </where>
     </select>
