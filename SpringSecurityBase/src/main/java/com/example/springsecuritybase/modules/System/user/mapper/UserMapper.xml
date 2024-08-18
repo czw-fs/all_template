@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springsecuritybase.modules.System.user.mapper.UserMapper">
 
-
-
+    <select id="getPage" resultType="com.example.springsecuritybase.modules.System.user.model.vo.UserVo">
+        select *
+        from sys_user
+        <where>
+            <if test="searchDto.username != null and searchDto.username != ''">
+                and username like concat('%',#{searchDto.username},'%')
+            </if>
+            <if test="searchDto.gender != null">
+                and gender = #{searchDto.gender}
+            </if>
+            <if test="searchDto.status != null">
+                and status = #{searchDto.status}
+            </if>
+            and is_deleted = false
+        </where>
+    </select>
 </mapper>

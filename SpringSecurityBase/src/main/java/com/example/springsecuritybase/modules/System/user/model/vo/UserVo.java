@@ -1,16 +1,12 @@
-package com.example.springsecuritybase.modules.System.user.model.dto;
+package com.example.springsecuritybase.modules.System.user.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.example.springsecuritybase.modules.System.user.model.enums.UserStatus;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class UserDto {
+public class UserVo {
 
-    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 用户名
@@ -39,5 +35,5 @@ public class UserDto {
     /**
      * 状态
      */
-    private UserStatus status;
+    private String status;
 }

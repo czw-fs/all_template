@@ -1,27 +1,18 @@
-package com.example.springsecuritybase.modules.System.user.model.entities;
+package com.example.springsecuritybase.modules.System.user.model.dto;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.springsecuritybase.modules.System.user.model.enums.UserGender;
-import com.example.springsecuritybase.modules.common.model.BaseEntity;
+import com.example.springsecuritybase.modules.System.user.model.enums.UserStatus;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("sys_user")
-public class User extends BaseEntity {
-    /**
-     * 主键ID
-     */
-    @TableId
-    private Long id;
+public class CreateUserDto {
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空")
     private String username;
     /**
      * 密码
@@ -46,7 +37,5 @@ public class User extends BaseEntity {
     /**
      * 状态
      */
-    private String status;
-
+    private UserStatus status;
 }
-
