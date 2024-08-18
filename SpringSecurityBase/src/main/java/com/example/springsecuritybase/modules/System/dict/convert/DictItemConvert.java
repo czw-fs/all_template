@@ -1,6 +1,8 @@
 package com.example.springsecuritybase.modules.System.dict.convert;
 
-import com.example.springsecuritybase.modules.System.dict.model.dto.DictItemDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.CreateDictItemDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.UpdateDictItemDto;
+import com.example.springsecuritybase.modules.System.dict.model.vo.DictItemVo;
 import com.example.springsecuritybase.modules.System.dict.model.entities.DictItem;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
@@ -11,11 +13,14 @@ import java.util.List;
 public interface DictItemConvert {
 
     @InheritConfiguration
-    DictItem dtoToEntity(DictItemDto dto);
+    DictItem createDictItemDtoToEntity(CreateDictItemDto dto);
 
     @InheritConfiguration
-    DictItemDto entityToDto(DictItem dictItem);
+    DictItem updateDictItemDtoToEntity(UpdateDictItemDto dto);
 
     @InheritConfiguration
-    List<DictItemDto> entityListToDtoList(List<DictItem> dictItemList);
+    DictItemVo entityToDictItemVo(DictItem dictItem);
+
+    @InheritConfiguration
+    List<DictItemVo> entityListToDictItemVoList(List<DictItem> dictItemList);
 }

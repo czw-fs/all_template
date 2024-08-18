@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springsecuritybase.modules.System.dict.convert.DictItemConvert;
 import com.example.springsecuritybase.modules.System.dict.mapper.DictItemMapper;
 import com.example.springsecuritybase.modules.System.dict.mapper.DictMapper;
-import com.example.springsecuritybase.modules.System.dict.model.dto.DictItemDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.CreateDictItemDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.UpdateDictItemDto;
+import com.example.springsecuritybase.modules.System.dict.model.vo.DictItemVo;
 import com.example.springsecuritybase.modules.System.dict.model.dto.DictItemSearchDto;
 import com.example.springsecuritybase.modules.System.dict.model.entities.DictItem;
 import com.example.springsecuritybase.modules.System.dict.service.DictItemService;
@@ -23,29 +25,29 @@ public class DictItemServiceImpl extends ServiceImpl<DictItemMapper, DictItem> i
     private final DictItemMapper dictItemMapper;
 
     @Override
-    public void create(DictItemDto dto) {
-        DictItem  dictItem = dictItemConvert.dtoToEntity(dto);
+    public void create(CreateDictItemDto dto) {
+        DictItem  dictItem = dictItemConvert.createDictItemDtoToEntity(dto);
         dictItemMapper.insert(dictItem);
     }
 
     @Override
-    public void update(DictItemDto dto) {
-        DictItem  dictItem = dictItemConvert.dtoToEntity(dto);
+    public void update(UpdateDictItemDto dto) {
+        DictItem  dictItem = dictItemConvert.updateDictItemDtoToEntity(dto);
         dictItemMapper.updateById(dictItem);
     }
 
     @Override
-    public DictItemDto getOneById(Long id) {
+    public DictItemVo getOneById(Long id) {
         DictItem dictItem = dictItemMapper.selectById(id);
-        DictItemDto dto = dictItemConvert.entityToDto(dictItem);
-        return dto;
+        DictItemVo dictItemVo = dictItemConvert.entityToDictItemVo(dictItem);
+        return dictItemVo;
     }
 
     @Override
-    public List<DictItemDto> getList(DictItemSearchDto dto) {
+    public List<DictItemVo> getList(DictItemSearchDto dto) {
         List<DictItem> dictItemList = dictItemMapper.getList(dto);
-        List<DictItemDto> dictItemDtoList = dictItemConvert.entityListToDtoList(dictItemList);
-        return dictItemDtoList;
+        List<DictItemVo> dictItemVoList = dictItemConvert.entityListToDictItemVoList(dictItemList);
+        return dictItemVoList;
     }
 
 }

@@ -8,7 +8,6 @@ import com.example.springsecuritybase.modules.System.dict.model.dto.UpdateDictDt
 import com.example.springsecuritybase.modules.System.dict.model.vo.DictVo;
 import com.example.springsecuritybase.modules.System.dict.service.DictService;
 import com.example.springsecuritybase.modules.common.model.Result;
-import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,7 @@ public class DictController {
      * @return
      */
     @PostMapping("/create")
-    public Result<Void> create(@RequestBody @Validated({CreateGroup.class}) CreateDictDto dictDto) {
+    public Result<Void> create(@RequestBody @Validated CreateDictDto dictDto) {
         dictService.create(dictDto);
         return Result.success();
     }
@@ -69,11 +68,9 @@ public class DictController {
 
     /**
      * 分页查询
-     * @param searchDto
-     * @return
      */
     @GetMapping("/page")
-    public Result<Page<DictVo>> page(@Validated DictSearchDto searchDto) {
+    public Result<Page<DictVo>> page(DictSearchDto searchDto) {
         Page<DictVo> page = dictService.getPage(searchDto);
         return Result.success(page);
     }
