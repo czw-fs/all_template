@@ -2,9 +2,10 @@ package com.example.springsecuritybase.modules.System.dict.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.springsecuritybase.modules.System.dict.model.dto.DictDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.CreateDictDto;
 import com.example.springsecuritybase.modules.System.dict.model.dto.DictSearchDto;
-import com.example.springsecuritybase.modules.System.dict.model.entities.Dict;
+import com.example.springsecuritybase.modules.System.dict.model.dto.UpdateDictDto;
+import com.example.springsecuritybase.modules.System.dict.model.vo.DictVo;
 import com.example.springsecuritybase.modules.System.dict.service.DictService;
 import com.example.springsecuritybase.modules.common.model.Result;
 import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 字典
+ */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/dict")
@@ -25,7 +29,7 @@ public class DictController {
      * @return
      */
     @PostMapping("/create")
-    public Result<Void> create(@RequestBody @Validated({CreateGroup.class}) DictDto dictDto) {
+    public Result<Void> create(@RequestBody @Validated({CreateGroup.class}) CreateDictDto dictDto) {
         dictService.create(dictDto);
         return Result.success();
     }
@@ -36,7 +40,7 @@ public class DictController {
      * @return
      */
     @PutMapping("/update")
-    public Result<Void> update(@RequestBody DictDto dictDto) {
+    public Result<Void> update(@RequestBody UpdateDictDto dictDto) {
         dictService.update(dictDto);
         return Result.success();
     }
@@ -47,9 +51,9 @@ public class DictController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<DictDto> getById(@PathVariable("id")  Long id) {
-        DictDto dictDto = dictService.getOneById(id);
-        return Result.success(dictDto);
+    public Result<DictVo> getById(@PathVariable("id")  Long id) {
+        DictVo dictVo = dictService.getOneById(id);
+        return Result.success(dictVo);
     }
 
     /**
@@ -58,7 +62,7 @@ public class DictController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public Result<Dict> deleteById(@PathVariable("id") Long id) {
+    public Result<Void> deleteById(@PathVariable("id") Long id) {
         dictService.removeById(id);
         return Result.success();
     }
@@ -69,8 +73,8 @@ public class DictController {
      * @return
      */
     @GetMapping("/page")
-    public Result<Page<DictDto>> page(@Validated DictSearchDto searchDto) {
-        Page<DictDto> page = dictService.getPage(searchDto);
+    public Result<Page<DictVo>> page(@Validated DictSearchDto searchDto) {
+        Page<DictVo> page = dictService.getPage(searchDto);
         return Result.success(page);
     }
 }

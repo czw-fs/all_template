@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springsecuritybase.modules.System.dict.convert.DictConvert;
 import com.example.springsecuritybase.modules.System.dict.mapper.DictMapper;
-import com.example.springsecuritybase.modules.System.dict.model.dto.DictDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.CreateDictDto;
 import com.example.springsecuritybase.modules.System.dict.model.dto.DictSearchDto;
+import com.example.springsecuritybase.modules.System.dict.model.dto.UpdateDictDto;
 import com.example.springsecuritybase.modules.System.dict.model.entities.Dict;
+import com.example.springsecuritybase.modules.System.dict.model.vo.DictVo;
 import com.example.springsecuritybase.modules.System.dict.service.DictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,30 +23,31 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     private final DictMapper dictMapper;
 
     @Override
-    public void create(DictDto dictDto) {
-        Dict dict = dictConvert.dictDtoToDict(dictDto);
+    public void create(CreateDictDto dictDto) {
+        Dict dict = dictConvert.createDictDToEntity(dictDto);
         dictMapper.insert(dict);
     }
 
     @Override
-    public void update(DictDto dictDto) {
-        Dict dict = dictConvert.dictDtoToDict(dictDto);
+    public void update(UpdateDictDto dictDto) {
+        Dict dict = dictConvert.updateDictDToEntity(dictDto);
         dictMapper.updateById(dict);
     }
 
     @Override
-    public DictDto getOneById(Long id) {
+    public DictVo getOneById(Long id) {
         Dict dict = dictMapper.selectById(id);
-        DictDto dictDto = dictConvert.dictToDictDto(dict);
-        return dictDto;
+        DictVo dictVo = dictConvert.dictToDictVo(dict);
+        return dictVo;
     }
 
     @Override
-    public Page<DictDto> getPage(DictSearchDto dto) {
-        Page<DictDto> page = new Page<>(dto.getPageNum(),dto.getPageSize());
+    public Page<DictVo> getPage(DictSearchDto dto) {
+        Page<DictVo> page = new Page<>(dto.getPageNum(),dto.getPageSize());
         List<Dict> dictList = dictMapper.getPage(dto, page);
-        List<DictDto> dictDtoList = dictConvert.dictListToDictDtoList(dictList);
-        page.setRecords(dictDtoList);
+
+        List<DictVo> dictVoList = dictConvert.dictListToDictVoList(dictList);
+        page.setRecords(dictVoList);
         return page;
     }
 }

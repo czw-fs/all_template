@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 字典子项
+ */
 @RestController
 @RequiredArgsConstructor
 public class DictItemController {
