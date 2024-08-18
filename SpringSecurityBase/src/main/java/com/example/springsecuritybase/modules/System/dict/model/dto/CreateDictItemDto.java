@@ -1,8 +1,6 @@
 package com.example.springsecuritybase.modules.System.dict.model.dto;
 
-import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,11 +8,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class CreateDictItemDto {
-    /**
-     * id
-     */
-    @Null(message = "新建时id应为空",groups = CreateGroup.class)
-    private Long id;
     /**
      * 字典id
      */

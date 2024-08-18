@@ -7,6 +7,7 @@ import com.example.springsecuritybase.modules.System.dict.model.vo.DictItemVo;
 import com.example.springsecuritybase.modules.System.dict.service.DictItemService;
 import com.example.springsecuritybase.modules.common.model.Result;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class DictItemController {
      * @return
      */
     @PostMapping("/create")
-    public Result<Void> create(@RequestBody CreateDictItemDto dto) {
+    public Result<Void> create(@RequestBody @Validated CreateDictItemDto dto) {
         dictItemService.create(dto);
         return Result.success();
     }

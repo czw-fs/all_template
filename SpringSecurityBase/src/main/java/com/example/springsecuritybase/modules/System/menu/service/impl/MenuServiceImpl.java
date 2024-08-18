@@ -3,9 +3,11 @@ package com.example.springsecuritybase.modules.System.menu.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springsecuritybase.modules.System.menu.convert.MenuConvert;
 import com.example.springsecuritybase.modules.System.menu.mapper.MenuMapper;
-import com.example.springsecuritybase.modules.System.menu.model.dto.MenuDto;
+import com.example.springsecuritybase.modules.System.menu.model.dto.CreateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDto;
+import com.example.springsecuritybase.modules.System.menu.model.dto.UpdateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.eneities.Menu;
+import com.example.springsecuritybase.modules.System.menu.model.vo.MenuVo;
 import com.example.springsecuritybase.modules.System.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,28 +24,28 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private final MenuConvert menuConvert;
 
     @Override
-    public void create(MenuDto menuDto) {
-        Menu menu = menuConvert.dtoToEntity(menuDto);
+    public void create(CreateMenuDto menuDto) {
+        Menu menu = menuConvert.createMenuDtoToEntity(menuDto);
         menuMapper.insert(menu);
     }
 
     @Override
-    public void update(MenuDto menuDto) {
-        Menu menu = menuConvert.dtoToEntity(menuDto);
+    public void update(UpdateMenuDto menuDto) {
+        Menu menu = menuConvert.updateMenuDtoToEntity(menuDto);
         menuMapper.updateById(menu);
     }
 
     @Override
-    public MenuDto getOneById(Long id) {
+    public MenuVo getOneById(Long id) {
         Menu menu = menuMapper.selectById(id);
-        MenuDto menuDto = menuConvert.entityToDto(menu);
+        MenuVo menuDto = menuConvert.entityToMenuVo(menu);
         return menuDto;
     }
 
     @Override
-    public List<MenuDto> getList(MenuSearchDto dto) {
+    public List<MenuVo> getList(MenuSearchDto dto) {
         List<Menu> menuList = menuMapper.getList(dto);
-        List<MenuDto> menuDtos = menuConvert.entityListToDtoList(menuList);
+        List<MenuVo> menuDtos = menuConvert.entityListToDtoList(menuList);
         return menuDtos;
     }
 }

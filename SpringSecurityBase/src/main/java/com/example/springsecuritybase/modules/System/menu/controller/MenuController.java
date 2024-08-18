@@ -1,11 +1,11 @@
 package com.example.springsecuritybase.modules.System.menu.controller;
 
-import com.example.springsecuritybase.modules.System.menu.model.dto.MenuDto;
+import com.example.springsecuritybase.modules.System.menu.model.dto.CreateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDto;
+import com.example.springsecuritybase.modules.System.menu.model.dto.UpdateMenuDto;
+import com.example.springsecuritybase.modules.System.menu.model.vo.MenuVo;
 import com.example.springsecuritybase.modules.System.menu.service.MenuService;
 import com.example.springsecuritybase.modules.common.model.Result;
-import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
-import com.example.springsecuritybase.modules.common.validation.group.UpdateGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class MenuController {
      * @return
      */
     @PostMapping("/create")
-    public Result<Void> create(@RequestBody @Validated(CreateGroup.class) MenuDto menuDto) {
+    public Result<Void> create(@RequestBody @Validated CreateMenuDto menuDto) {
         menuService.create(menuDto);
         return Result.success();
     }
@@ -37,7 +37,7 @@ public class MenuController {
      * @return
      */
     @PutMapping("/update")
-    public Result<Void> update(@RequestBody @Validated(UpdateGroup.class) MenuDto menuDto) {
+    public Result<Void> update(@RequestBody @Validated UpdateMenuDto menuDto) {
         menuService.update(menuDto);
         return Result.success();
     }
@@ -48,9 +48,9 @@ public class MenuController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<MenuDto> getById(@PathVariable("id")Long id) {
-        MenuDto menuDto = menuService.getOneById(id);
-        return Result.success(menuDto);
+    public Result<MenuVo> getById(@PathVariable("id")Long id) {
+        MenuVo menuVo = menuService.getOneById(id);
+        return Result.success(menuVo);
     }
 
     /**
@@ -65,13 +65,13 @@ public class MenuController {
     }
 
     /**
-     * 删除菜单
+     * 获取菜单列表
      * @return
      */
     @GetMapping("/list")
-    public Result<List<MenuDto>> getList(MenuSearchDto dto) {
-        List<MenuDto> menuDtoList = menuService.getList(dto);
-        return Result.success(menuDtoList);
+    public Result<List<MenuVo>> getList(MenuSearchDto dto) {
+        List<MenuVo> menuVoList = menuService.getList(dto);
+        return Result.success(menuVoList);
     }
 
 }
