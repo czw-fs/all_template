@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
     "com.example.springsecuritybase.modules.System.user.mapper",
     "com.example.springsecuritybase.modules.System.dict.mapper",
     "com.example.springsecuritybase.modules.System.menu.mapper",
+    "com.example.springsecuritybase.modules.System.role.mapper",
     "com.example.springsecuritybase.modules.test.mapper"
 })
 @SpringBootApplication

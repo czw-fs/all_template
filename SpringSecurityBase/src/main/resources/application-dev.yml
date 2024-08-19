@@ -10,13 +10,12 @@ spring:
     url: jdbc:mysql://localhost:3306/rbac?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
-  mvc: #前端传参，字符串转日期类型
+  mvc: #全局字符串格式化，前端字符串转日期
     format:
       date: yyyy-MM-dd
       time: HH:mm:ss
       date-time: yyyy-MM-dd HH:mm:ss
-
-  main:
+  main: # 不打印banner
     banner-mode: off
 
 mybatis-plus:

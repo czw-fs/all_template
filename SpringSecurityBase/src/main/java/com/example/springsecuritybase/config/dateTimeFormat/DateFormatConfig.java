@@ -55,4 +55,13 @@ public class DateFormatConfig {
                     .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(timePattern)));
         };
     }
+
+    /**
+     * 注册一个日期格式化器
+     * 需要用到时直接注入
+     */
+    @Bean
+    public DateTimeFormatter dataFormatter() {
+        return DateTimeFormatter.ofPattern(dateTimePattern);
+    }
 }
