@@ -17,4 +17,14 @@
             </if>
         </where>
     </select>
+
+    <select id="getMenusByRoleIds" resultType="java.lang.String">
+        select sm.permission
+        from sys_menu sm
+                 left join sys_role_menu srm on srm.menu_id = sm.id
+        where srm.role_id in
+        <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
 </mapper>

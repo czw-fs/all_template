@@ -20,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * 获取当前登录用户信息及权限
+     * 获取当前登录用户信息，角色，权限
      */
     public Result<UserInfoVo> getCurLoginUserInfoVo() {
         UserInfoVo userInfoVo = userService.getUserInfoVo();

@@ -1,16 +1,20 @@
 package com.example.springsecuritybase.modules.System.role.model.entities;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.springsecuritybase.modules.System.role.model.enums.RoleStatus;
 import com.example.springsecuritybase.modules.common.model.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import javax.management.relation.RoleStatus;
 import java.io.Serial;
 import java.io.Serializable;
 
 @Data
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@TableName("sys_role")
 public class Role extends BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 2765133205408687577L;
@@ -39,4 +43,9 @@ public class Role extends BaseEntity implements Serializable {
      * 状态
      */
     private RoleStatus status;
+
+    /**
+     * 备注
+     */
+    private String remark;
 }

@@ -2,13 +2,9 @@ package com.example.springsecuritybase.modules.System.role.model.dto;
 
 import com.example.springsecuritybase.modules.System.role.model.enums.RoleStatus;
 import lombok.Data;
-import lombok.experimental.Accessors;
-
-
 
 @Data
-@Accessors(chain = true)
-public class CreateRoleDto {
+public class RoleSearchDto {
 
     /**
      * 角色名称
@@ -16,23 +12,8 @@ public class CreateRoleDto {
     private String name;
 
     /**
-     * 角色编码
-     */
-    private String code;
-
-    /**
-     * 排序
-     */
-    private Integer sort;
-
-    /**
      * 状态
      */
     private RoleStatus status;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
 }

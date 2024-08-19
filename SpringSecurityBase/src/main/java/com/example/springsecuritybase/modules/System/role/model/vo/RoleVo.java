@@ -1,4 +1,4 @@
-package com.example.springsecuritybase.modules.System.role.model.dto;
+package com.example.springsecuritybase.modules.System.role.model.vo;
 
 import com.example.springsecuritybase.modules.System.role.model.enums.RoleStatus;
 import lombok.Data;
@@ -8,7 +8,9 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class CreateRoleDto {
+public class RoleVo {
+
+    private Long id;
 
     /**
      * 角色名称

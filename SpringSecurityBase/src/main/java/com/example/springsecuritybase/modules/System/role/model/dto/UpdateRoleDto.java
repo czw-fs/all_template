@@ -2,14 +2,14 @@ package com.example.springsecuritybase.modules.System.role.model.dto;
 
 import com.example.springsecuritybase.modules.System.role.model.enums.RoleStatus;
 import lombok.Data;
-import lombok.experimental.Accessors;
-
-
 
 @Data
-@Accessors(chain = true)
-public class CreateRoleDto {
+public class UpdateRoleDto {
 
+    /**
+     * id
+     */
+    private Long id;
     /**
      * 角色名称
      */
@@ -34,5 +34,4 @@ public class CreateRoleDto {
      * 备注
      */
     private String remark;
-
 }

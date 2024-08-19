@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  *  当前登录用户信息及权限
@@ -18,9 +19,9 @@ public class UserInfoVo {
 
     private String avatar;
 
-    private List<String> role;
+    private List<String> roleList;
 
-    private List<String> permissions;
+    private Set<String> permissions;
 
 
 }

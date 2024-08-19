@@ -4,6 +4,10 @@ package com.example.springsecuritybase.modules.System.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.springsecuritybase.modules.System.menu.mapper.MenuMapper;
+import com.example.springsecuritybase.modules.System.role.convert.RoleConvert;
+import com.example.springsecuritybase.modules.System.role.mapper.RoleMapper;
+import com.example.springsecuritybase.modules.System.role.model.entities.Role;
 import com.example.springsecuritybase.modules.System.user.convert.UserConvert;
 import com.example.springsecuritybase.modules.System.user.mapper.UserMapper;
 import com.example.springsecuritybase.modules.System.user.model.dto.CreateUserDto;
@@ -17,8 +21,11 @@ import com.example.springsecuritybase.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,14 +34,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     private final UserMapper userMapper;
     private final UserConvert userConvert;
     private final PasswordEncoder passwordEncoder;
+    private final RoleMapper roleMapper;
+    private final RoleConvert roleConvert;
+    private final MenuMapper menuMapper;
 
     @Override
     public UserInfoVo getUserInfoVo() {
-        User user = userMapper.selectById(SecurityUtil.getUserId());
+        Long userId = SecurityUtil.getUserId();
+
+        //用户基本信息
+        User user = userMapper.selectById(userId);
         UserInfoVo userInfoVo = userConvert.entityToUserInfoVo(user);
 
-//        userMapper.getRoles();
-        return null;
+        //角色
+        List<Role> roleList = roleMapper.getRolesByUserId(userId);
+        List<String> roleCodeList = roleList.stream().map(Role::getCode).toList();
+        userInfoVo.setRoleList(roleCodeList);
+
+        //权限
+        Set<Long> roleIds = roleList.stream().map(Role::getId).collect(Collectors.toSet());
+        if(!CollectionUtils.isEmpty(roleIds)){
+            Set<String> permissionList = menuMapper.getMenusByRoleIds(roleIds);
+            userInfoVo.setPermissions(permissionList);
+        }
+        return userInfoVo;
     }
 
     @Override
