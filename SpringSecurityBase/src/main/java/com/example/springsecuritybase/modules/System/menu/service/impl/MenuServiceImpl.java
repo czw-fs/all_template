@@ -8,6 +8,7 @@ import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDt
 import com.example.springsecuritybase.modules.System.menu.model.dto.UpdateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.eneities.Menu;
 import com.example.springsecuritybase.modules.System.menu.model.vo.MenuVo;
+import com.example.springsecuritybase.modules.System.menu.model.vo.RouteVO;
 import com.example.springsecuritybase.modules.System.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     private final MenuMapper menuMapper;
     private final MenuConvert menuConvert;
+
+    @Override
+    public List<RouteVO> getRoutes() {
+//        List<>menuMapper.getRootMenu(SystemConstants.MENU_ROOT_ID);
+        return null;
+    }
 
     @Override
     public void create(CreateMenuDto menuDto) {

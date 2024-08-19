@@ -1,6 +1,7 @@
 package com.example.springsecuritybase.modules.System.menu.model.dto;
 
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class CreateMenuDto {
      * 菜单类型
      */
     @NotBlank(message = "菜单类型不能为空")
-    private String type;
+    private MenuType type;
     /**
      * 路由名称
      */

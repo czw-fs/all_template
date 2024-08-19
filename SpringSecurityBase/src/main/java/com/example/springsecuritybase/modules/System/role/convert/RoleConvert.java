@@ -23,5 +23,5 @@ public interface RoleConvert {
     RoleVo entityToRoleVo(Role role);
 
     @InheritConfiguration
-    List<CurUserRolesVo> entityListToRoleVoList(List<Role> roleList);
+    List<RoleVo> entityListToRoleVoList(List<Role> roleList);
 }

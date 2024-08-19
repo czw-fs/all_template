@@ -22,6 +22,7 @@ public class UserController {
     /**
      * 获取当前登录用户信息，角色，权限
      */
+    @GetMapping("/getCurLoginUserInfoVo")
     public Result<UserInfoVo> getCurLoginUserInfoVo() {
         UserInfoVo userInfoVo = userService.getUserInfoVo();
         return Result.success(userInfoVo);

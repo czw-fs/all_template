@@ -1,6 +1,7 @@
 package com.example.springsecuritybase.modules.System.menu.model.dto;
 
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuType;
 import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -29,7 +30,7 @@ public class UpdateMenuDto {
     /**
      * 菜单类型
      */
-    private String type;
+    private MenuType type;
     /**
      * 路由名称
      */

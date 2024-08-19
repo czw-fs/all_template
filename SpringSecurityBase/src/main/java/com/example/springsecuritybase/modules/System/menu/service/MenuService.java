@@ -6,6 +6,7 @@ import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDt
 import com.example.springsecuritybase.modules.System.menu.model.dto.UpdateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.eneities.Menu;
 import com.example.springsecuritybase.modules.System.menu.model.vo.MenuVo;
+import com.example.springsecuritybase.modules.System.menu.model.vo.RouteVO;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface MenuService extends IService<Menu> {
     MenuVo getOneById(Long id);
 
     List<MenuVo> getList(MenuSearchDto dto);
+
+    List<RouteVO> getRoutes();
 }

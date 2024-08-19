@@ -1,6 +1,7 @@
 package com.example.springsecuritybase.modules.System.menu.model.vo;
 
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -24,7 +25,7 @@ public class MenuVo {
     /**
      * 菜单类型
      */
-    private String type;
+    private MenuType type;
     /**
      * 路由名称
      */

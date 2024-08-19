@@ -18,7 +18,7 @@
     <select id="getRolesByUserId" resultType="com.example.springsecuritybase.modules.System.role.model.entities.Role">
         select sr.*
         from sys_role sr
-        left join sys_role_user sru on sru.role_id = sr.id
+        left join sys_user_role sru on sru.role_id = sr.id
         where status = "NORMAL"
         and is_deleted = false
         and sru.user_id = #{userId}

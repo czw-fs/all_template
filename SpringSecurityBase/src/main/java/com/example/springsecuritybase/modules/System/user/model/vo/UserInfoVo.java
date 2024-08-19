@@ -21,7 +21,7 @@ public class UserInfoVo {
 
     private List<String> roleList;
 
-    private Set<String> permissions;
+    private Set<String> permissionList;
 
 
 }

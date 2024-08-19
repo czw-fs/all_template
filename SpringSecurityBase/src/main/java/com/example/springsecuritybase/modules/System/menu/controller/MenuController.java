@@ -4,6 +4,7 @@ import com.example.springsecuritybase.modules.System.menu.model.dto.CreateMenuDt
 import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDto;
 import com.example.springsecuritybase.modules.System.menu.model.dto.UpdateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.vo.MenuVo;
+import com.example.springsecuritybase.modules.System.menu.model.vo.RouteVO;
 import com.example.springsecuritybase.modules.System.menu.service.MenuService;
 import com.example.springsecuritybase.modules.common.model.Result;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,14 @@ import java.util.List;
 public class MenuController {
 
     private final MenuService menuService;
+
+    /**
+     * 获取用户权限（路由）
+     */
+    public Result<List<String>> getRoutes() {
+        List<RouteVO> routeVOList = menuService.getRoutes();
+        return Result.success();
+    }
 
     /**
      * 新增菜单

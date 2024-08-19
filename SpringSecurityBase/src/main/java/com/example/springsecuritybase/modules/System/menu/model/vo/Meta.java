@@ -1,0 +1,37 @@
+package com.example.springsecuritybase.modules.System.menu.model.vo;
+
+import lombok.Data;
+
+import java.util.Map;
+
+/**
+ * 路由属性
+ */
+@Data
+public class Meta {
+
+    /**
+     * 路由名称
+     */
+    private String title;
+
+    /**
+     * 路由图标
+     */
+    private String icon;
+
+    /**
+     * 是否展示
+     */
+    private Boolean hidden;
+
+    /**
+     * 是否固定在标签栏
+     */
+    private Boolean alwaysShow;
+
+    /**
+     * 路由参数
+     */
+    private Map<String, String> params;
+}

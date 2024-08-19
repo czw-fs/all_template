@@ -55,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         Set<Long> roleIds = roleList.stream().map(Role::getId).collect(Collectors.toSet());
         if(!CollectionUtils.isEmpty(roleIds)){
             Set<String> permissionList = menuMapper.getMenusByRoleIds(roleIds);
-            userInfoVo.setPermissions(permissionList);
+            userInfoVo.setPermissionList(permissionList);
         }
         return userInfoVo;
     }

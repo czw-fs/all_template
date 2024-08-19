@@ -3,6 +3,7 @@ package com.example.springsecuritybase.modules.System.menu.model.eneities;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuType;
 import com.example.springsecuritybase.modules.common.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,7 +28,7 @@ public class Menu extends BaseEntity {
     /**
      * 菜单类型
      */
-    private String type;
+    private MenuType type;
     /**
      * 路由名称
      */

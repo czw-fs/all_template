@@ -1,6 +1,7 @@
 package com.example.springsecuritybase.modules.System.menu.model.dto;
 
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,7 +16,7 @@ public class MenuSearchDto {
     /**
      * 菜单类型
      */
-    private String type;
+    private MenuType type;
 
     /**
      * 是否展示
