@@ -10,8 +10,10 @@ import com.example.springsecuritybase.modules.System.user.model.dto.CreateUserDt
 import com.example.springsecuritybase.modules.System.user.model.dto.UpdateUserDto;
 import com.example.springsecuritybase.modules.System.user.model.dto.UserSearchDto;
 import com.example.springsecuritybase.modules.System.user.model.entities.User;
+import com.example.springsecuritybase.modules.System.user.model.vo.UserInfoVo;
 import com.example.springsecuritybase.modules.System.user.model.vo.UserVo;
 import com.example.springsecuritybase.modules.System.user.service.UserService;
+import com.example.springsecuritybase.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     private final UserMapper userMapper;
     private final UserConvert userConvert;
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserInfoVo getUserInfoVo() {
+        User user = userMapper.selectById(SecurityUtil.getUserId());
+        UserInfoVo userInfoVo = userConvert.entityToUserInfoVo(user);
+
+//        userMapper.getRoles();
+        return null;
+    }
 
     @Override
     public User selectUserByUsername(String username) {
@@ -54,11 +65,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         return userVo;
     }
 
-
     @Override
     public Page<UserVo> selectPage(UserSearchDto searchDto) {
         Page<UserVo> page = new Page<>(searchDto.getPageNum(), searchDto.getPageSize());
-        List<UserVo> userVoList = userMapper.getPage(searchDto,page);
+        List<User> userList = userMapper.getPage(searchDto,page);
+
+        List<UserVo> userVoList = userConvert.userListToUserVoList(userList);
         page.setRecords(userVoList);
         return page;
     }

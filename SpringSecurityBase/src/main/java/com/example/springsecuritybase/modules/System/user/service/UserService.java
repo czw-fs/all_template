@@ -7,6 +7,7 @@ import com.example.springsecuritybase.modules.System.user.model.dto.CreateUserDt
 import com.example.springsecuritybase.modules.System.user.model.dto.UpdateUserDto;
 import com.example.springsecuritybase.modules.System.user.model.dto.UserSearchDto;
 import com.example.springsecuritybase.modules.System.user.model.entities.User;
+import com.example.springsecuritybase.modules.System.user.model.vo.UserInfoVo;
 import com.example.springsecuritybase.modules.System.user.model.vo.UserVo;
 
 public interface UserService extends IService<User> {
@@ -19,4 +20,6 @@ public interface UserService extends IService<User> {
     void updateUser(UpdateUserDto userDto);
 
     UserVo getOneById(Long id);
+
+    UserInfoVo getUserInfoVo();
 }

@@ -1,7 +1,7 @@
 package com.example.springsecuritybase.config.security.login.handle;
 
 import com.example.springsecuritybase.modules.common.model.Result;
-import com.example.springsecuritybase.utils.JwtUtils;
+import com.example.springsecuritybase.utils.JwtUtil;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,10 +24,10 @@ import java.io.PrintWriter;
 public class LoginFailHandler implements AuthenticationFailureHandler {
 
 
-    private final JwtUtils jwtUtils;
+    private final JwtUtil jwtUtil;
 
-    public LoginFailHandler(JwtUtils jwtUtils) {
-        this.jwtUtils = jwtUtils;
+    public LoginFailHandler(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
     }
 
     @Override

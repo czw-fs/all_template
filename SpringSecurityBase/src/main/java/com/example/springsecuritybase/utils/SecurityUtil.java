@@ -3,7 +3,7 @@ package com.example.springsecuritybase.utils;
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public class SecurityUtils {
+public class SecurityUtil {
 
     private static UserLoginInfo principal = (UserLoginInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     /**

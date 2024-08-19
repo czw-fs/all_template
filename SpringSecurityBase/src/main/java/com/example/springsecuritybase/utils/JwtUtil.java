@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class JwtUtils {
+public class JwtUtil {
 
     @Value("${jwt.secret:helloworld}")
     private String secret;

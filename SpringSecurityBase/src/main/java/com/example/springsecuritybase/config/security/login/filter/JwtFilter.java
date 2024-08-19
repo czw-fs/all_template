@@ -3,7 +3,7 @@ package com.example.springsecuritybase.config.security.login.filter;
 
 import com.example.springsecuritybase.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
-import com.example.springsecuritybase.utils.JwtUtils;
+import com.example.springsecuritybase.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,10 +18,10 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtUtils jwtUtils;
+    private final JwtUtil jwtUtil;
 
-    public JwtFilter(JwtUtils jwtUtils, AuthenticationFailureHandler authenticationFailureHandler) {
-        this.jwtUtils = jwtUtils;
+    public JwtFilter(JwtUtil jwtUtil, AuthenticationFailureHandler authenticationFailureHandler) {
+        this.jwtUtil = jwtUtil;
     }
 
 
@@ -39,12 +39,12 @@ public class JwtFilter extends OncePerRequestFilter {
         final String token = request.getHeader("token");
 
         //token为空或token过期，直接放行，进入认证流程
-        if(!StringUtils.hasLength(token) || jwtUtils.isTokenExpired(token)){
+        if(!StringUtils.hasLength(token) || jwtUtil.isTokenExpired(token)){
             chain.doFilter(request, response);
             return;
         }
 
-        UserLoginInfo userLoginInfo = jwtUtils.getUserLoginInfoFromJwt(token);
+        UserLoginInfo userLoginInfo = jwtUtil.getUserLoginInfoFromJwt(token);
 
         CustomUsernamePasswordAuthenticationToken authenticationToken = new CustomUsernamePasswordAuthenticationToken();
         authenticationToken.setCurrentUser(userLoginInfo);

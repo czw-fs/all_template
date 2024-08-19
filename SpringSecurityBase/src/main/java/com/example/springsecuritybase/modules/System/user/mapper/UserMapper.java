@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface UserMapper extends BaseMapper<User> {
-    List<UserVo> getPage(@Param("searchDto") UserSearchDto searchDto, Page<UserVo> page);
+    List<User> getPage(@Param("searchDto") UserSearchDto searchDto, Page<UserVo> page);
 }

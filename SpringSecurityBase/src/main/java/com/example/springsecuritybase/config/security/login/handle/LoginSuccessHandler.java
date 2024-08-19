@@ -2,7 +2,7 @@ package com.example.springsecuritybase.config.security.login.handle;
 
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
 import com.example.springsecuritybase.modules.common.model.Result;
-import com.example.springsecuritybase.utils.JwtUtils;
+import com.example.springsecuritybase.utils.JwtUtil;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final JwtUtils jwtUtils;
+    private final JwtUtil jwtUtil;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -37,7 +37,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         //todo refreshToken
 
         currentUser.setSessionId(UUID.randomUUID().toString());
-        String token = jwtUtils.createJwt(currentUser);
+        String token = jwtUtil.createJwt(currentUser);
 
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         PrintWriter writer = response.getWriter();

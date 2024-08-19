@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springsecuritybase.modules.System.user.model.dto.CreateUserDto;
 import com.example.springsecuritybase.modules.System.user.model.dto.UpdateUserDto;
 import com.example.springsecuritybase.modules.System.user.model.dto.UserSearchDto;
+import com.example.springsecuritybase.modules.System.user.model.vo.UserInfoVo;
 import com.example.springsecuritybase.modules.System.user.model.vo.UserVo;
 import com.example.springsecuritybase.modules.System.user.service.UserService;
 import com.example.springsecuritybase.modules.common.model.Result;
@@ -17,6 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    /**
+     * 获取当前登录用户信息及权限
+     */
+    public Result<UserInfoVo> getCurLoginUserInfoVo() {
+        UserInfoVo userInfoVo = userService.getUserInfoVo();
+        return Result.success(userInfoVo);
+    }
 
     /**
      * 新增用户
@@ -57,8 +66,6 @@ public class UserController {
         userService.removeById(id);
         return Result.success();
     }
-
-
 
     /**
      * 分页查询用户
