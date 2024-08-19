@@ -1,6 +1,6 @@
 package com.example.springsecuritybase.modules.System.dict.model.dto;
 
-import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
@@ -13,7 +13,7 @@ public class UpdateDictItemDto {
     /**
      * id
      */
-    @Null(message = "新建时id应为空",groups = CreateGroup.class)
+    @Null(message = "新建时id应为空")
     private Long id;
     /**
      * 字典id

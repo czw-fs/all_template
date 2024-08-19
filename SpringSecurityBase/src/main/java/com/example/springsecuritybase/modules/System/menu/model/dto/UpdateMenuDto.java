@@ -2,7 +2,6 @@ package com.example.springsecuritybase.modules.System.menu.model.dto;
 
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuType;
-import com.example.springsecuritybase.modules.common.validation.group.CreateGroup;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.Data;
@@ -15,7 +14,7 @@ public class UpdateMenuDto {
     /**
      *  菜单id
      */
-    @Null(message = "菜单id不能为空",groups = CreateGroup.class)
+    @Null(message = "菜单id不能为空")
     private Long id;
 
     /**

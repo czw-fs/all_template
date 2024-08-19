@@ -1,5 +1,6 @@
 package com.example.springsecuritybase.modules.System.menu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springsecuritybase.modules.System.menu.convert.MenuConvert;
 import com.example.springsecuritybase.modules.System.menu.mapper.MenuMapper;
@@ -7,13 +8,20 @@ import com.example.springsecuritybase.modules.System.menu.model.dto.CreateMenuDt
 import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDto;
 import com.example.springsecuritybase.modules.System.menu.model.dto.UpdateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.eneities.Menu;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
 import com.example.springsecuritybase.modules.System.menu.model.vo.MenuVo;
+import com.example.springsecuritybase.modules.System.menu.model.vo.Meta;
 import com.example.springsecuritybase.modules.System.menu.model.vo.RouteVO;
 import com.example.springsecuritybase.modules.System.menu.service.MenuService;
+import com.example.springsecuritybase.modules.common.model.enums.SystemConstants;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -26,9 +34,55 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<RouteVO> getRoutes() {
-//        List<>menuMapper.getRootMenu(SystemConstants.MENU_ROOT_ID);
-        return null;
+        return setChildren(null,SystemConstants.MENU_ROOT_ID);
     }
+
+    private List<RouteVO> setChildren(RouteVO parentRouteVO, Long parentId) {
+        // 查询指定父 ID 的子菜单
+        List<Menu> childMenus = menuMapper.selectList(new LambdaQueryWrapper<Menu>().eq(Menu::getParentId, parentId));
+
+        // 初始化子 RouteVO 列表
+        List<RouteVO> routeVOList = new ArrayList<>();
+        for (Menu childMenu : childMenus) {
+
+            RouteVO routeVO = setMeta(childMenu);
+            List<RouteVO> children = setChildren(routeVO, childMenu.getId());
+
+            routeVO.setChildren(children.isEmpty() ? null : children);
+            routeVOList.add(routeVO);
+        }
+
+        return routeVOList;
+    }
+
+
+
+    private RouteVO setMeta(Menu menu) {
+        RouteVO routeVO = new RouteVO()
+                .setName(menu.getRouterName())
+                .setPath(menu.getRoutePath())
+                .setComponent(menu.getComponentPath())
+                .setRedirect(menu.getRedirect())
+                ;
+
+        Meta meta = new Meta()
+                .setTitle(menu.getName())
+                .setIcon(menu.getIcon())
+                .setHidden(menu.getDisplay().equals(MenuDisplay.HIDDEN))
+                .setAlwaysShow(true)
+                ;
+
+        //解析成 Map
+        if (menu.getParams() != null) {
+            Gson gson = new Gson();
+            Map<String, String> paramsMap = gson.fromJson(menu.getParams(), new TypeToken<Map<String, String>>(){}.getType());
+            meta.setParams(paramsMap);
+        }
+
+        routeVO.setMeta(meta);
+        return routeVO;
+    }
+
 
     @Override
     public void create(CreateMenuDto menuDto) {

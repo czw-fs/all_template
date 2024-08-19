@@ -2,12 +2,18 @@ package com.example.springsecuritybase.modules.System.menu.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Accessors(chain = true)
 public class RouteVO {
+    /**
+     * 路由名称
+     */
+    private String name;
     /**
      * 路由路径
      */
@@ -23,10 +29,6 @@ public class RouteVO {
      */
     private String redirect;
 
-    /**
-     * 路由名称
-     */
-    private String name;
 
     /**
      * 路由属性

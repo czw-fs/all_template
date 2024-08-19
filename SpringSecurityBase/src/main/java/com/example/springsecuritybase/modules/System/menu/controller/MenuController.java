@@ -28,9 +28,9 @@ public class MenuController {
     /**
      * 获取用户权限（路由）
      */
-    public Result<List<String>> getRoutes() {
+    public Result<List<RouteVO>> getRoutes() {
         List<RouteVO> routeVOList = menuService.getRoutes();
-        return Result.success();
+        return Result.success(routeVOList);
     }
 
     /**

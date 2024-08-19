@@ -1,6 +1,7 @@
 package com.example.springsecuritybase.modules.System.menu.model.vo;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import java.util.Map;
  * 路由属性
  */
 @Data
+@Accessors(chain = true)
 public class Meta {
 
     /**
