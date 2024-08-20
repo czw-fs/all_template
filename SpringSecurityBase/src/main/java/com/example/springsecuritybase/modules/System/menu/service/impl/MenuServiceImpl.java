@@ -79,10 +79,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         //解析成 Map
         if (menu.getParams() != null) {
-            Gson gson = new Gson();
             Map<String, String> paramsMap = null;
             try {
-                paramsMap = gson.fromJson(menu.getParams(), new TypeToken<Map<String, String>>(){}.getType());
+                paramsMap = new Gson().fromJson(menu.getParams(), new TypeToken<Map<String, String>>(){}.getType());
             } catch (JsonSyntaxException e) {
                 throw new RuntimeException("params解析异常",e);
             }
