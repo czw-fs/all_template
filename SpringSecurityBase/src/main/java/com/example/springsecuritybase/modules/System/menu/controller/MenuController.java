@@ -28,6 +28,7 @@ public class MenuController {
     /**
      * 获取用户权限（路由）
      */
+    @GetMapping("/routes")
     public Result<List<RouteVO>> getRoutes() {
         List<RouteVO> routeVOList = menuService.getRoutes();
         return Result.success(routeVOList);

@@ -9,17 +9,20 @@ import com.example.springsecuritybase.modules.System.menu.model.dto.MenuSearchDt
 import com.example.springsecuritybase.modules.System.menu.model.dto.UpdateMenuDto;
 import com.example.springsecuritybase.modules.System.menu.model.eneities.Menu;
 import com.example.springsecuritybase.modules.System.menu.model.enums.MenuDisplay;
+import com.example.springsecuritybase.modules.System.menu.model.enums.MenuType;
 import com.example.springsecuritybase.modules.System.menu.model.vo.MenuVo;
 import com.example.springsecuritybase.modules.System.menu.model.vo.Meta;
 import com.example.springsecuritybase.modules.System.menu.model.vo.RouteVO;
 import com.example.springsecuritybase.modules.System.menu.service.MenuService;
 import com.example.springsecuritybase.modules.common.model.enums.SystemConstants;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +42,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     private List<RouteVO> setChildren(RouteVO parentRouteVO, Long parentId) {
         // 查询指定父 ID 的子菜单
-        List<Menu> childMenus = menuMapper.selectList(new LambdaQueryWrapper<Menu>().eq(Menu::getParentId, parentId));
+        List<Menu> childMenus = menuMapper.selectList(
+                new LambdaQueryWrapper<Menu>()
+                        .eq(Menu::getParentId, parentId)
+                        .in(Menu::getType, Arrays.asList(MenuType.MENU, MenuType.CATALOG))
+        );
 
         // 初始化子 RouteVO 列表
         List<RouteVO> routeVOList = new ArrayList<>();
@@ -54,8 +61,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         return routeVOList;
     }
-
-
 
     private RouteVO setMeta(Menu menu) {
         RouteVO routeVO = new RouteVO()
@@ -75,7 +80,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //解析成 Map
         if (menu.getParams() != null) {
             Gson gson = new Gson();
-            Map<String, String> paramsMap = gson.fromJson(menu.getParams(), new TypeToken<Map<String, String>>(){}.getType());
+            Map<String, String> paramsMap = null;
+            try {
+                paramsMap = gson.fromJson(menu.getParams(), new TypeToken<Map<String, String>>(){}.getType());
+            } catch (JsonSyntaxException e) {
+                throw new RuntimeException("params解析异常",e);
+            }
             meta.setParams(paramsMap);
         }
 

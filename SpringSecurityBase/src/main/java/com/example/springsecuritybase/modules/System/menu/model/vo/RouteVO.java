@@ -7,8 +7,8 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Accessors(chain = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RouteVO {
     /**
      * 路由名称

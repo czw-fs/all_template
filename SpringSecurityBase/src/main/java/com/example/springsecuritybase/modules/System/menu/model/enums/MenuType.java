@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum MenuType {
-    catalog("目录"),
+    CATALOG("目录"),
     MENU("菜单"),
     BUTTON("按钮"),
     LINK("链接")
