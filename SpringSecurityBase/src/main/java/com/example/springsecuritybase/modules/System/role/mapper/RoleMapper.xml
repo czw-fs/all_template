@@ -23,4 +23,13 @@
         and is_deleted = false
         and sru.user_id = #{userId}
     </select>
+
+    <select id="getRoleCodesByUserId" resultType="java.lang.String">
+        select sr.code
+        from sys_role sr
+        left join sys_user_role sru on sru.role_id = sr.id
+        where status = "NORMAL"
+        and is_deleted = false
+        and sru.user_id = #{userId}
+    </select>
 </mapper>

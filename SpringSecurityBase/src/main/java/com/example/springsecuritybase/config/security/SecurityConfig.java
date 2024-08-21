@@ -45,8 +45,8 @@ public class SecurityConfig {
         disableSomeHttpSetting(http);
         // 所有路径都需要认证
         http.securityMatcher("/**")
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .cors((cors)-> cors.configurationSource(corsConfigurationSource()))//配置自定义跨域
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 ;
 
         // 用户名、密码登录

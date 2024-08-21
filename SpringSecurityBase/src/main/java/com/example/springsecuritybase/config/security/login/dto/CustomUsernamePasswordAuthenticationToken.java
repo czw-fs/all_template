@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,6 +23,10 @@ public class CustomUsernamePasswordAuthenticationToken extends AbstractAuthentic
     private String password;
     //当前登录用户信息
     private UserLoginInfo currentUser;
+    //角色
+    private Set<String> roleList;
+    //权限
+    private Set<String> permissionList;
 
     public CustomUsernamePasswordAuthenticationToken(Collection<? extends GrantedAuthority> authorities) {
         super(authorities);//权限

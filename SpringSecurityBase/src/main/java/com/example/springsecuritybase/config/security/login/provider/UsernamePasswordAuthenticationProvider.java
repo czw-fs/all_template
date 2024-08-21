@@ -3,6 +3,8 @@ package com.example.springsecuritybase.config.security.login.provider;
 
 import com.example.springsecuritybase.config.security.login.dto.CustomUsernamePasswordAuthenticationToken;
 import com.example.springsecuritybase.config.security.login.dto.UserLoginInfo;
+import com.example.springsecuritybase.modules.System.menu.mapper.MenuMapper;
+import com.example.springsecuritybase.modules.System.role.mapper.RoleMapper;
 import com.example.springsecuritybase.modules.System.user.model.entities.User;
 import com.example.springsecuritybase.modules.System.user.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 /**
  * 使用用户名密码登录方式的认证逻辑
  */
@@ -21,19 +25,30 @@ import org.springframework.stereotype.Component;
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private MenuMapper menuMapper;
 
-    public UsernamePasswordAuthenticationProvider() {}
+    public UsernamePasswordAuthenticationProvider() {
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
+        CustomUsernamePasswordAuthenticationToken customToken = new CustomUsernamePasswordAuthenticationToken();
+        //用户基本信息
         UserLoginInfo userLoginInfo = checkPassword(authentication);
+        //角色
+        Set<String> roleSet = roleMapper.getRoleCodesByUserId(customToken.getCurrentUser().getUserId());
+        //权限
+        Set<String> permissionSet = menuMapper.getPermissionByUserId(customToken.getCurrentUser().getUserId());
 
-        CustomUsernamePasswordAuthenticationToken token = new CustomUsernamePasswordAuthenticationToken();
-        token.setCurrentUser(userLoginInfo);
+        customToken.setCurrentUser(userLoginInfo)
+                .setRoleList(roleSet)
+                .setPermissionList(permissionSet);
 
-        token.setAuthenticated(true); // 认证通过，这里一定要设成true
-        return token;
+        customToken.setAuthenticated(true); // 认证通过，这里一定要设成true
+        return customToken;
     }
 
     private UserLoginInfo checkPassword(Authentication authentication) {
@@ -44,16 +59,15 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         User user = userService.selectUserByUsername(username);
 
         if (user == null || !new BCryptPasswordEncoder().matches(password, user.getPassword())) {
-            /**
-             * 抛出异常后后，AuthenticationFailureHandler的实现类会处理这个异常。
-             */
             throw new BadCredentialsException("用户名或密码不正确");
         }
+
         UserLoginInfo userLoginInfo = new UserLoginInfo();
         userLoginInfo
                 .setUserId(user.getId())
                 .setUsername(user.getUsername())
         ;
+
         return userLoginInfo;
         /**
          * 这里security会将UserLoginInfo对象封装到Authentication对象中，并设置到当前线程的security的上下文中。接下载就可以使用SecurityContext了
