@@ -7,6 +7,7 @@ import com.example.springsecuritybase.modules.System.menu.mapper.MenuMapper;
 import com.example.springsecuritybase.modules.System.role.mapper.RoleMapper;
 import com.example.springsecuritybase.modules.System.user.model.entities.User;
 import com.example.springsecuritybase.modules.System.user.service.impl.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,13 +16,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 /**
  * 使用用户名密码登录方式的认证逻辑
  */
 
 @Component
+@Slf4j
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private UserServiceImpl userService;
@@ -39,13 +39,13 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         //用户基本信息
         UserLoginInfo userLoginInfo = checkPassword(authentication);
         //角色
-        Set<String> roleSet = roleMapper.getRoleCodesByUserId(customToken.getCurrentUser().getUserId());
+//        Set<String> roleSet = roleMapper.getRoleCodesByUserId(customToken.getCurrentUser().getUserId());
         //权限
-        Set<String> permissionSet = menuMapper.getPermissionByUserId(customToken.getCurrentUser().getUserId());
+//        Set<String> permissionSet = menuMapper.getPermissionByUserId(customToken.getCurrentUser().getUserId());
 
-        customToken.setCurrentUser(userLoginInfo)
-                .setRoleList(roleSet)
-                .setPermissionList(permissionSet);
+        customToken.setCurrentUser(userLoginInfo);
+//                .setRoleList(roleSet)
+//                .setPermissionList(permissionSet);
 
         customToken.setAuthenticated(true); // 认证通过，这里一定要设成true
         return customToken;
@@ -56,7 +56,13 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        User user = userService.selectUserByUsername(username);
+        User user = null;
+        try {
+            user = userService.selectUserByUsername(username);
+        } catch (Exception e) {
+            log.error(e.toString());
+            throw new RuntimeException(e);
+        }
 
         if (user == null || !new BCryptPasswordEncoder().matches(password, user.getPassword())) {
             throw new BadCredentialsException("用户名或密码不正确");
