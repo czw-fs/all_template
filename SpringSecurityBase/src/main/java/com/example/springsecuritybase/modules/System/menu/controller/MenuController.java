@@ -45,10 +45,11 @@ public class MenuController {
         return Result.success();
     }
 
+
     /**
-     * 修改菜单
-     * @param menuDto
-     * @return
+     * 更新菜单
+     * @param menuDto 菜单 DTO
+     * @return {@link Result }<{@link Void }>
      */
     @PutMapping("/update")
     public Result<Void> update(@RequestBody @Validated UpdateMenuDto menuDto) {
