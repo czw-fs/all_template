@@ -20,8 +20,6 @@ public class DemoController {
     @GetMapping("/fs")
     public Result<Object> login(){
 
-
-
         return Result.success( testMapper.selectById(1));
     }
 }

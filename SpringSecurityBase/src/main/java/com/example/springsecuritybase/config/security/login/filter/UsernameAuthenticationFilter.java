@@ -22,6 +22,8 @@ import java.io.IOException;
  */
 public class UsernameAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
+    private UserLoginDto userLoginDto;
+
     public UsernameAuthenticationFilter(AntPathRequestMatcher pathRequestMatcher,
                                         AuthenticationManager authenticationManager,
                                         AuthenticationSuccessHandler authenticationSuccessHandler,
@@ -35,7 +37,12 @@ public class UsernameAuthenticationFilter extends AbstractAuthenticationProcessi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         // 提取请求体的数据
-        UserLoginDto userLoginDto = new ObjectMapper().readValue(request.getInputStream(), UserLoginDto.class);
+        UserLoginDto userLoginDto = null;
+        try {
+            userLoginDto = new ObjectMapper().readValue(request.getInputStream(), UserLoginDto.class);
+        } catch (IOException e) {
+            throw new RuntimeException("用户名或密码解析异常",e);
+        }
 
         String username = userLoginDto.getUsername();
         String password = userLoginDto.getPassword();
