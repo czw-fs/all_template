@@ -2,13 +2,10 @@
 2.github copilot
 3.mybatisCodeHelperPro
 4.POJO to JSON
-5.translation
 6.CamelCase
 7.Translation
 8.Comments Highlighter
 9.Cool Request
-10.marsCode 
-11.tongyi
 12.Bean Assistant
 
 油猴脚本：
