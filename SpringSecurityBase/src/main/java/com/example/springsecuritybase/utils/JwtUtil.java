@@ -42,6 +42,22 @@ public class JwtUtil {
     }
 
     /**
+     * 验证token是否有效
+     * @param token
+     * @return
+     */
+    public boolean isValidToken(String token) {
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret)).build();
+            verifier.verify(token);
+            return true;
+        } catch (Exception e) {
+            log.error("Token is invalid: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    /**
      * 检查 JWT 是否过期
      *
      * @param token

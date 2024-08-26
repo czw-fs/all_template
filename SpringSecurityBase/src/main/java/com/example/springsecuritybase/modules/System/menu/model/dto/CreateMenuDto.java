@@ -26,7 +26,7 @@ public class CreateMenuDto {
     @NotBlank(message = "菜单类型不能为空")
     private MenuType type;
     /**
-     * 路由名称
+     * 路由名称（Vue Router 中用于命名路由）
      */
     private String routerName;
     /**
