@@ -1,0 +1,26 @@
+# ????
+server:
+  port: 8080
+
+# ???
+spring:
+  datasource:
+    primary:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf-8
+      username: root
+      password: 123456
+    second:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/test2?characterEncoding=utf-8
+      username: root
+      password: 123456
+
+  jackson:
+    serialization:
+      indent-output: true
+mybatis:
+  primary:
+    mapper-locations: classpath:mapper/*.xml
+  secondary:
+    mapper-locations: classpath:mapper/*.xml
