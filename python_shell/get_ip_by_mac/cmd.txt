@@ -1,0 +1,2 @@
+#打包成exe
+pyinstaller --onefile get_ip_by_mac.py
