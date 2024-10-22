@@ -1,4 +1,5 @@
 <script setup>
+
 //注意是@后面的字符串
 const emits = defineEmits(['customEvent'])
 
