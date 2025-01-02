@@ -1,0 +1,16 @@
+1.一键安装docker
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+
+2.一键安装docker-compose
+sudo curl -L https://get.daocloud.io/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+3.登录实例
+获取临时密码或固定密码后，可通过密码登录镜像服务实例：
+容器镜像服务/实例列表/访问凭证
+sudo docker login --username=aliyun0438576814 registry.cn-shanghai.aliyuncs.com
+密码：360同一批760
+
+4.配置国内阿里云镜像：
+访问该地址：https://cr.console.aliyun.com/cn-shanghai/instances/mirrors
+选择镜像工具 -> 镜像加速器，运行对应命令
