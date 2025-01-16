@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  # 邮箱发送人配置
+  mail:
+    host: smtp.qq.com
+    username: 1954635917@qq.com
+    password: waqvuysnbzjijjbf
+    port: 465
+    protocol: smtp
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: false # QQ邮箱不支持 STARTTLS
+          connectiontimeout: 5000 # 连接超时时间，单位毫秒
+          timeout: 5000 # 超时时间，单位毫秒
+          writetimeout: 5000 # 写入超时时间，单位毫秒
