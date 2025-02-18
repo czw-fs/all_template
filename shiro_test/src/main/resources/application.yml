@@ -1,0 +1,23 @@
+
+# 配置数据库的连接字符串
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1/test?characterEncoding=utf8&serveTimezone=Asia/shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #只返回不为null的数据
+  jackson:
+    default-property-inclusion: non_null
+
+# 设置 Mybatis 的 xml 保存路径
+mybatis:
+  mapper-locations: classpath:mapper/**Mapper.xml
+  configuration: # 配置打印 MyBatis 执行的 SQL
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8888
+
+jwt:
+  secret: hello
+  expire: 7200
