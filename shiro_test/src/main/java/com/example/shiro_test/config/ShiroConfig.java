@@ -3,7 +3,7 @@ package com.example.shiro_test.config;
 import com.example.shiro_test.config.matcher.JwtCredentialsMatcher;
 import com.example.shiro_test.config.matcher.UsernameCredentialsMatcher;
 import com.example.shiro_test.config.realms.JWTRealm;
-import com.example.shiro_test.config.realms.MyRealm;
+import com.example.shiro_test.config.realms.UsernameRealm;
 import com.example.shiro_test.filter.JWTFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
@@ -36,7 +36,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filterMap);
 
         // 设置无权限时跳转url
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized/无权限");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
 
         // 编写过滤规则
         Map<String, String> filterRuleMap = new HashMap<>();
@@ -50,7 +50,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSecurityManager defaultWebSecurityManager(JWTRealm jwtRealm, MyRealm myRealm) {
+    public DefaultWebSecurityManager defaultWebSecurityManager(JWTRealm jwtRealm, UsernameRealm myRealm) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
 
         jwtRealm.setCredentialsMatcher(new JwtCredentialsMatcher());

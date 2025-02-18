@@ -1,25 +1,22 @@
 package com.example.shiro_test.config.realms;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.shiro_test.mapper.UserMapper;
 import com.example.shiro_test.model.JWTToken;
 import com.example.shiro_test.model.dto.UserInfo;
 import com.example.shiro_test.model.entities.User;
-import com.example.shiro_test.service.UserService;
 import com.example.shiro_test.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class JWTRealm extends AuthorizingRealm {
 
@@ -36,14 +33,8 @@ public class JWTRealm extends AuthorizingRealm {
     // 检验权限时调用
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-//        DecodedJWT verify = JWTUtils.verify(principalCollection.toString());
-//        String email = verify.getClaim("email").asString();
-//        // 根据email查询用户的身份和权限
-//        User user = userService.selectByEmail(email);
-//        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//        info.addRole(user.getRole());
-//        info.addStringPermissions(user.getPermission());
-        return null;
+        log.info("添加权限");
+        return new UserInfo();
     }
 
     // 认证和鉴权时调用

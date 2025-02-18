@@ -1,13 +1,5 @@
 package com.example.shiro_test.demo;
 
-import com.example.shiro_test.config.realms.MyRealm;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.DefaultSecurityManager;
-import org.apache.shiro.realm.text.IniRealm;
-import org.apache.shiro.subject.Subject;
-
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
