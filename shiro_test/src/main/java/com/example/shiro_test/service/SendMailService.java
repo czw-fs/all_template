@@ -38,9 +38,9 @@ public class SendMailService {
         try {
             int randomNumber = ThreadLocalRandom.current().nextInt(1000, 10000);
 
-            redisTemplate.opsForValue().set();
 
-            String codeMsg = "<h1 color:skyblue>"+ randomNumber +"</h1>";
+
+            String codeMsg = "<h1 color='red'>"+ randomNumber +"</h1>";
             helper.setText(codeMsg,true);
             helper.setSubject("请及时查收您的验证码！！！！！！");
 
