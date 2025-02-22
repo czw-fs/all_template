@@ -5,6 +5,7 @@ import com.example.shiro_test.model.Result;
 import com.example.shiro_test.model.param.MailParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,53 +25,53 @@ public class SendMailService {
     private final JavaMailSender javaMailSender;
 
 
-    public Result sendTextEmail(MailParam mailParam) {
+    public Result<Void> sendTextEmail(MailParam mailParam) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailParam.getTo().toArray(new String[0]));
+
+        //发送人
         message.setFrom(mailProperties.getUsername());
-        message.setSubject(subject);
-        message.setText(text);
+        //接收人
+        message.setTo(mailParam.getTo().toArray(new String[0]));
+        //抄送人
+        if(CollectionUtils.isNotEmpty(mailParam.getCc())) {
+            message.setCc(mailParam.getCc().toArray(new String[0]));
+        }
+
+        message.setSubject(mailParam.getSubject());
+        message.setText(mailParam.getText());
+
         javaMailSender.send(message);
+        return Result.success("邮箱发送成功");
     }
 
-    public void sendHtmlEmail(String to, String subject, String htmlText) {
+    // 发送带附件的html邮件
+    public Result<Void> sendHtmlEmail(MailParam mailParam) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);  // 第三个参数表示是否开启多附件支持
+            //发送人
             helper.setFrom(mailProperties.getUsername());
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlText, true);  // 第一个参数为邮件内容，第二个参数为true表示HTML格式
-            javaMailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            log.error("异常，异常信息：{}",e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
-    }
+            //接收人
+            helper.setTo(mailParam.getTo().toArray(new String[0]));
+            //抄送人
+            if(CollectionUtils.isNotEmpty(mailParam.getCc())) {
+                helper.setCc(mailParam.getCc().toArray(new String[0]));
+            }
 
+            helper.setSubject(mailParam.getSubject());
+            helper.setText(mailParam.getText(), true);  // 第一个参数为邮件内容，第二个参数为true表示HTML格式
 
-    // 发送带附件的邮件
-    public void sendMailWithAttachments(String to, String subject, String content, File[] attachments) {
-        try {
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);  // 第三个参数表示是否开启多附件支持
-
-            helper.setFrom(mailProperties.getUsername());
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(content, true);  // 第二个参数为true表示HTML格式的邮件
-
-            if (attachments != null) {
-                for (File attachment : attachments) {
+            if (CollectionUtils.isNotEmpty(mailParam.getAttachments())) {
+                for (File attachment : mailParam.getAttachments()) {
                     helper.addAttachment(attachment.getName(), attachment);
                 }
             }
 
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            log.error("异常，异常信息：{}",e.getMessage(), e);
-            throw new RuntimeException(e);
+            log.error("sendHtmlEmail发送邮件异常，异常，参数：{}，异常信息：{}",mailParam,e.getMessage(), e);
         }
+        return Result.success("邮箱发送成功");
     }
 }

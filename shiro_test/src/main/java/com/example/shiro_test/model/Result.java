@@ -24,6 +24,12 @@ public class Result<T> {
     public static <T> Result<T> success(T data) {
         return new Result<>(200, "success", data);
     }
+    public static <T> Result<T> success(String message) {
+        return new Result<>(200, message, null);
+    }
+    public static <T> Result<T> success() {
+        return new Result<>(200, "success", null);
+    }
 
     /**
      * 返回失败结果
