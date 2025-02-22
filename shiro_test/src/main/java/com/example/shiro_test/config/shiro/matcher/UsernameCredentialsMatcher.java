@@ -1,4 +1,4 @@
-package com.example.shiro_test.config.matcher;
+package com.example.shiro_test.config.shiro.matcher;
 
 import com.example.shiro_test.model.dto.LoginUserDto;
 import com.example.shiro_test.model.dto.UserInfo;

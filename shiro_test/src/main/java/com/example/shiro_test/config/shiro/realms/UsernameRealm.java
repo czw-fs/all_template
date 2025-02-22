@@ -1,4 +1,4 @@
-package com.example.shiro_test.config.realms;
+package com.example.shiro_test.config.shiro.realms;
 
 import com.example.shiro_test.mapper.UserMapper;
 import com.example.shiro_test.model.dto.LoginUserDto;

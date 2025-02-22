@@ -1,4 +1,4 @@
-package com.example.shiro_test.config.matcher;
+package com.example.shiro_test.config.shiro.matcher;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

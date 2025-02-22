@@ -1,9 +1,9 @@
-package com.example.shiro_test.config;
+package com.example.shiro_test.config.shiro;
 
-import com.example.shiro_test.config.matcher.JwtCredentialsMatcher;
-import com.example.shiro_test.config.matcher.UsernameCredentialsMatcher;
-import com.example.shiro_test.config.realms.JWTRealm;
-import com.example.shiro_test.config.realms.UsernameRealm;
+import com.example.shiro_test.config.shiro.matcher.JwtCredentialsMatcher;
+import com.example.shiro_test.config.shiro.matcher.UsernameCredentialsMatcher;
+import com.example.shiro_test.config.shiro.realms.JWTRealm;
+import com.example.shiro_test.config.shiro.realms.UsernameRealm;
 import com.example.shiro_test.filter.JWTFilter;
 import lombok.RequiredArgsConstructor;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;

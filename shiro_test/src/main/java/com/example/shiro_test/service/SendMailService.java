@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +25,41 @@ public class SendMailService {
 
     private final MailProperties mailProperties;
     private final JavaMailSender javaMailSender;
+    private final RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 发送验证码
+     */
+    public Result<Void> sendVerificationCodeEmail(String to) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
 
+        //接收人
+        try {
+            int randomNumber = ThreadLocalRandom.current().nextInt(1000, 10000);
+
+            redisTemplate.opsForValue().set();
+
+            String codeMsg = "<h1 color:skyblue>"+ randomNumber +"</h1>";
+            helper.setText(codeMsg,true);
+            helper.setSubject("请及时查收您的验证码！！！！！！");
+
+            helper.setFrom(mailProperties.getUsername());
+            helper.setTo(to);
+
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            log.error("验证码发送异常，请稍后再试，参数：{}，异常信息：{}",to, e.getMessage(),e);
+            return Result.success("验证码发送异常，请稍后再试，异常信息：" + e.getMessage());
+        }
+        return Result.success("验证码发送成功");
+    }
+
+    /**
+     * 发送自定义文本邮箱
+     * @param mailParam
+     * @return
+     */
     public Result<Void> sendTextEmail(MailParam mailParam) {
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -44,7 +79,11 @@ public class SendMailService {
         return Result.success("邮箱发送成功");
     }
 
-    // 发送带附件的html邮件
+    /**
+     * 发送带附件的html邮件
+     * @param mailParam
+     * @return
+     */
     public Result<Void> sendHtmlEmail(MailParam mailParam) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 

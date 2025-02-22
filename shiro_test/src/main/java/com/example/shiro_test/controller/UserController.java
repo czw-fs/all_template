@@ -1,6 +1,6 @@
 package com.example.shiro_test.controller;
 
-import com.example.shiro_test.config.contanst.NormalConstant;
+import com.example.shiro_test.config.shiro.contanst.NormalConstant;
 import com.example.shiro_test.mapper.UserMapper;
 import com.example.shiro_test.model.Result;
 import com.example.shiro_test.model.entities.User;
