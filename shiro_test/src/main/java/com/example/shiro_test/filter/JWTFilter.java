@@ -1,7 +1,6 @@
 package com.example.shiro_test.filter;
 
-import com.example.shiro_test.config.contanst.NormalConstant;
-import com.example.shiro_test.model.JWTToken;
+import com.example.shiro_test.model.dto.JWTToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

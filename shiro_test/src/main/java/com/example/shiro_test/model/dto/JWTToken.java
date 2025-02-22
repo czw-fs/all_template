@@ -1,4 +1,4 @@
-package com.example.shiro_test.model;
+package com.example.shiro_test.model.dto;
 
 import lombok.Data;
 import org.apache.shiro.authc.AuthenticationToken;

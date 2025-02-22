@@ -5,6 +5,7 @@ import com.example.shiro_test.config.matcher.UsernameCredentialsMatcher;
 import com.example.shiro_test.config.realms.JWTRealm;
 import com.example.shiro_test.config.realms.UsernameRealm;
 import com.example.shiro_test.filter.JWTFilter;
+import lombok.RequiredArgsConstructor;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.realm.Realm;
@@ -23,42 +24,21 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
+@RequiredArgsConstructor
 public class ShiroConfig {
+    private final JWTRealm jwtRealm;
+    private final JWTRealm usernameRealm;
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager defaultWebSecurityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
-
-        //这只jwt过滤器
-        Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("jwt", new JWTFilter());
-        shiroFilterFactoryBean.setFilters(filterMap);
-
-        // 设置无权限时跳转url
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
-
-        // 编写过滤规则
-        Map<String, String> filterRuleMap = new HashMap<>();
-        // 访问 登录接口时直接放行
-        filterRuleMap.put("/userLogin","anon");
-        // 其他所有请求都通过JWT Filter
-        filterRuleMap.put("/**", "jwt");
-
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
-        return shiroFilterFactoryBean;
-    }
-
-    @Bean
-    public DefaultWebSecurityManager defaultWebSecurityManager(JWTRealm jwtRealm, UsernameRealm myRealm) {
+    public DefaultWebSecurityManager defaultWebSecurityManager() {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
 
         jwtRealm.setCredentialsMatcher(new JwtCredentialsMatcher());
-        myRealm.setCredentialsMatcher(new UsernameCredentialsMatcher());
+        usernameRealm.setCredentialsMatcher(new UsernameCredentialsMatcher());
 
         List<Realm> realmList = new ArrayList<>();
         realmList.add(jwtRealm);
-        realmList.add(myRealm);
+        realmList.add(usernameRealm);
 
         defaultWebSecurityManager.setRealms(realmList);
 
@@ -70,6 +50,45 @@ public class ShiroConfig {
         defaultWebSecurityManager.setSubjectDAO(defaultSubjectDAO);
         return defaultWebSecurityManager;
     }
+
+    @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager defaultWebSecurityManager) {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
+
+        //添加过滤器
+        shiroFilterFactoryBean.setFilters(getFilters());
+        //过滤规则
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(getFilterChainDefinitionMap());
+
+        // 设置无权限时跳转url
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
+        return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 添加过滤器
+     */
+    public Map<String,Filter> getFilters(){
+        Map<String, Filter> filterMap = new HashMap<>();
+        filterMap.put("jwt", new JWTFilter());
+        return filterMap;
+    }
+
+    /**
+     * 过滤规则
+     */
+    public Map<String,String> getFilterChainDefinitionMap(){
+        Map<String, String> filterRuleMap = new HashMap<>();
+        // 访问 登录接口时直接放行
+        filterRuleMap.put("/userLogin","anon");
+        // 其他所有请求都通过JWT Filter
+        filterRuleMap.put("/**", "jwt");
+        return filterRuleMap;
+    }
+
+
+
 
     /**
      * 添加注解支持，如果不加的话很有可能注解失效

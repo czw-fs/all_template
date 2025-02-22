@@ -1,7 +1,7 @@
 package com.example.shiro_test.config.realms;
 
 import com.example.shiro_test.mapper.UserMapper;
-import com.example.shiro_test.model.JWTToken;
+import com.example.shiro_test.model.dto.JWTToken;
 import com.example.shiro_test.model.dto.UserInfo;
 import com.example.shiro_test.model.entities.User;
 import com.example.shiro_test.utils.JwtUtil;
