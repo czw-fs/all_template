@@ -18,7 +18,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = {HaveNoBlankValidator.class})// 标明由哪个类执行校验逻辑
-@R
 public @interface HaveNoBlank {
 
     // 校验出错时默认返回的消息

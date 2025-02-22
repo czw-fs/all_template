@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -27,7 +26,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ShiroConfig {
     private final JWTRealm jwtRealm;
-    private final JWTRealm usernameRealm;
+    private final UsernameRealm usernameRealm;
 
     @Bean
     public DefaultWebSecurityManager defaultWebSecurityManager() {
@@ -69,7 +68,7 @@ public class ShiroConfig {
     /**
      * 添加过滤器
      */
-    public Map<String,Filter> getFilters(){
+    public Map<String, Filter> getFilters(){
         Map<String, Filter> filterMap = new HashMap<>();
         filterMap.put("jwt", new JWTFilter());
         return filterMap;
@@ -87,9 +86,6 @@ public class ShiroConfig {
         return filterRuleMap;
     }
 
-
-
-
     /**
      * 添加注解支持，如果不加的话很有可能注解失效
      */
@@ -99,17 +95,13 @@ public class ShiroConfig {
         defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
         return defaultAdvisorAutoProxyCreator;
     }
-
+//
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager defaultWebSecurityManager){
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();6
         advisor.setSecurityManager(defaultWebSecurityManager);
         return advisor;
     }
 
-    @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
 
 }

@@ -5,30 +5,25 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.JWTVerifier;
-import com.example.shiro_test.model.dto.UserInfo;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Date;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "jwt")
 public class JwtUtil {
 
+    @Value("jwt.secret")
     private String secret;
-    private Long expire;
+    private Integer expire = 888;
 
     /**
      * 生成token
      */
-    //注意这里的key不是密码，而是进行三件套（salt+MD5+1024Hash）处理密码后得到的凭证
     public String createJwtToken(Long id) {
         Date date = Date.from(LocalDateTime.now().plusSeconds(expire).toInstant(ZoneOffset.ofHours(8)));
         Algorithm algorithm = Algorithm.HMAC256(secret);    //使用密钥进行哈希
